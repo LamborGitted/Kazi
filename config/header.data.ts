@@ -1,8 +1,16 @@
 //type and interface
 
 interface NavLink {
-    name: string;
+    id: string;
+
+    label: string;
+
+    i18nKey?: string;
+
     href?: string;
+
+    icon?: string;
+
     children?: NavLink[];
 }
 
@@ -10,15 +18,14 @@ interface NavLink {
 
 // set you config here
 
-export const appName="Lantxx Blog";
+export const appName="Lantxx Homepage";
 
 export const navLinks : NavLink[] = [
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Social", children: [
-    { name: "Github", href: "/contact/github" },
-    { name: "Bilibili", href: "/contact/bilibili" },
-    ] },
+  { id: "about", label: "About", href: "/about" },
+
+  { id : "Social", label: "Social", href: "/social", },
+  
+  { id: "contact", label: "Contact", href: "/contact" ,},
 ];
 
 
