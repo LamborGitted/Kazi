@@ -1,8 +1,7 @@
-import HuePicker from "@/components/ControlComponent/HuePicker";
-import { mainTitle, subTitle } from "@/config/home.data";
+import { mainTitle , subTitle } from "@/config/home.data";
+
 
 export default function Home() {
-
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black ">
@@ -10,9 +9,6 @@ export default function Home() {
         <p className="text-2xl text-gray-600 dark:text-gray-400 ">
             {subTitle}
         </p>
-
-        <HuePicker/>
-
     </div>
   );
 }

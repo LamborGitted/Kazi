@@ -23,18 +23,3 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-}
-
-::view-transition-new(root) {
-  clip-path: circle(0 at var(--x) var(--y));
-  animation: reveal 0.7s ease-in-out forwards;
-}
-
-@keyframes reveal {
-  to {
-    clip-path: circle(150% at var(--x) var(--y));
-  }
-}

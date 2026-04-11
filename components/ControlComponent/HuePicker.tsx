@@ -51,7 +51,7 @@ export default function HuePicker() {
       >
         {/* thumb */}
         <div
-          className="absolute top-1/2 w-7 h-7 border-2 border-white shadow"
+          className="absolute top-1/2 w-6 h-6 border-2 border-white shadow"
           style={{
             left: `${(hue / 360) * 100}%`,
             transform: "translate(-50%, -50%)",
