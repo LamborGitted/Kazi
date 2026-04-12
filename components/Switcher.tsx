@@ -14,8 +14,7 @@ export default function Switcher({
     const pathname = usePathname();
 
     return (
-
-        <main className="min-h-full flex flex-col">
+        <main className="min-h-full flex flex-col bg-zinc-900 dark:bg-zinc-300">
         <AnimatePresence mode="wait">
             <motion.div className="min-h-screen flex flex-col"
                 key={pathname}

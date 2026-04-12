@@ -1,17 +1,13 @@
-import ControlTitle from "./ControlComponent/ControlTitle"
 import SearchBar from "./ControlComponent/SearchBar"
-import LanguageSwitcher from "./ControlComponent/LanguageSwitcher"
 import Clock from "./ControlComponent/Clock"
+import HuePicker from "./ControlComponent/HuePicker"
 
 export default function Control() {
     return (
-        <div className="flex bg-white dark:bg-black p-4 min-w-full justify-center items-center">
-            
-            <ControlTitle />
-            <SearchBar />
-            <LanguageSwitcher />
+        <div className="flex bg-white dark:bg-black p-4 min-w-full justify-center gap-4 bottom-0">
             <Clock />
-            
+            <SearchBar />
+            <HuePicker />
         </div>
     )
 }

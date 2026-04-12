@@ -38,11 +38,10 @@ export default function HuePicker() {
   }
 
   return (
-    <div className="w-full h-16 flex items-center justify-center">
-      
+    <div className="w-50 h-16 flex items-center justify-center">
       <div
         ref={barRef}
-        className="relative w-50 h-4 cursor-pointer"
+        className="relative w-full h-4 cursor-pointer"
         onMouseDown={onMouseDown}
         style={{
           background: `linear-gradient(to right,

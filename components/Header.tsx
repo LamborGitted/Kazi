@@ -7,9 +7,7 @@ export default function Header() {
     
 
   return (
-    <header className="w-full h-16 flex items-center justify-center bg-white dark:bg-black">
-
-
+    <header className="sticky top-0 z-50 shrink-0 w-full h-16 flex items-center justify-center bg-white dark:bg-black">
       <div className="w-full max-w-3xl px-4 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold text-pink-600 dark:text-pink-400">
           {appName}
