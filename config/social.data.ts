@@ -44,10 +44,13 @@ interface OSUConfig {
     recent_score_show_auto: boolean;
     recent_score_list : string[];
 
+    //默认展示模式：osu / taiko / fruits / mania
+    default_mode : string;
+
     background_img : string;
 }
 
-interface XConfig {
+interface TwitterConfig {
     show: boolean;
     homepage_url: string;
     
@@ -66,7 +69,7 @@ interface XConfig {
 
 const bilibili_config: BilibiliConfig = {
     show: true,
-    homepage_url: "https://space.bilibili.com/12345678",
+    homepage_url: "https://space.bilibili.com/1517690573",
 
     icon_auto: true,
     icon: "",
@@ -74,7 +77,7 @@ const bilibili_config: BilibiliConfig = {
     show_video_list: false,
     video_list : [],
 
-    background_img : "https://i0.hdslb.com/bfs/archive/1234567890abcdef1234567890abcdef12345678.jpg"
+    background_img : "/image/6.webp"
 };
 
 const github_config: GithubConfig = {
@@ -88,12 +91,12 @@ const github_config: GithubConfig = {
     repo_show_auto: false,
     repo_list : [],
 
-    background_img : ""
+    background_img : "/image/1.webp"
 };
 
 const osu_config: OSUConfig = {
     show: true,
-    homepage_url: "https://osu.ppy.sh/users/12345678",
+    homepage_url: "https://osu.ppy.sh/users/35977401",
 
     icon_auto: true,
     icon: "",
@@ -101,10 +104,11 @@ const osu_config: OSUConfig = {
     show_recent_score_list: false,
     recent_score_show_auto: false,
     recent_score_list : [],
-    background_img : ""
+    default_mode : "mania",
+    background_img : "/image/11.webp"
 };
 
-const x_config: XConfig = {
+const twitter_config: TwitterConfig = {
     show: true,
     homepage_url: "https://x.com/LamborGitted",
 
@@ -117,5 +121,5 @@ const x_config: XConfig = {
     background_img : ""
 };
 
-export { bilibili_config, github_config, osu_config, x_config };
+export { bilibili_config, github_config, osu_config, twitter_config };
 
