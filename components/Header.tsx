@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { appName, navLinks } from "@/config/header.data";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const underlineVariants = {
   rest: { width: 0, left: "50%" },
@@ -16,6 +18,12 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const translatedNavLinks = navLinks.map((link) => ({
+    ...link,
+    label: (t.nav as Record<string, string>)[link.id] || link.label,
+  }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -72,7 +80,7 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
+          {translatedNavLinks.map((link) => (
             <Link
               key={link.id}
               href={link.href || "/"}
@@ -124,11 +132,15 @@ export default function Header() {
             </Link>
           ))}
           <div className="ml-2">
+            <LanguageToggle />
+          </div>
+          <div className="ml-2">
             <ThemeToggle />
           </div>
         </nav>
 
         <div className="flex md:hidden items-center gap-1">
+          <LanguageToggle />
           <ThemeToggle />
           <button
             className="relative w-8 h-8 flex items-center justify-center"
@@ -172,7 +184,7 @@ export default function Header() {
             <div className="px-6 py-6 flex flex-col gap-1 border-t"
               style={{ borderColor: "var(--border)" }}
             >
-              {navLinks.map((link, i) => (
+              {translatedNavLinks.map((link, i) => (
                 <motion.div
                   key={link.id}
                   initial={{ opacity: 0, x: -20 }}

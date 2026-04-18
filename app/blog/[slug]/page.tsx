@@ -17,7 +17,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const post = await getPostBySlug(slug);
+    const post = await getPostBySlug(slug, "en");
     return {
       title: `${post.title} — Lantxx Blog`,
       description: post.excerpt,
@@ -30,22 +30,29 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
 
-  let post;
+  let postEn, postZh;
   try {
-    post = await getPostBySlug(slug);
+    postEn = await getPostBySlug(slug, "en");
+    postZh = await getPostBySlug(slug, "zh");
   } catch {
     notFound();
   }
 
-  const allPosts = await getAllPosts();
+  const allPosts = await getAllPosts("en");
+  const allPostsZh = await getAllPosts("zh");
   const recentPosts = allPosts
+    .filter((p) => p.slug !== slug)
+    .slice(0, 3);
+  const recentPostsZh = allPostsZh
     .filter((p) => p.slug !== slug)
     .slice(0, 3);
 
   return (
     <PostClient
-      post={post}
+      post={postEn}
+      postZh={postZh}
       recentPosts={recentPosts}
+      recentPostsZh={recentPostsZh}
     />
   );
 }

@@ -12,6 +12,7 @@ import {
   osu_config,
   twitter_config,
 } from "@/config/social.data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface SocialSectionConfig {
   key: string;
@@ -193,6 +194,9 @@ function SocialSection({
 }
 
 export default function SocialPage() {
+  const { t } = useLanguage();
+  const social = t.social as Record<string, string>;
+
   return (
     <main className="flex flex-col min-h-screen relative">
       <section className="relative flex flex-col items-center justify-center py-28 sm:py-36 px-6 overflow-hidden">
@@ -213,11 +217,11 @@ export default function SocialPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono text-accent tracking-widest uppercase"
           >
-            Connect
+            {social.subtitle}
           </motion.span>
 
           <h1 className="mt-6 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none overflow-hidden [perspective:600px]">
-            {"SOCIAL".split("").map((char, i) => (
+            {social.heading.toUpperCase().split("").map((char, i) => (
               <motion.span
                 key={i}
                 custom={i}
@@ -250,7 +254,7 @@ export default function SocialPage() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="mt-6 text-base sm:text-lg font-light text-foreground/50 max-w-md mx-auto"
           >
-            Where I share, create, and connect with the world
+            {social.description}
           </motion.p>
         </motion.div>
 

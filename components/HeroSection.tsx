@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { mainTitle, subTitle, heroLines, socialLinks } from "@/config/home.data";
+import { mainTitle, socialLinks } from "@/config/home.data";
+import { useLanguage } from "@/components/LanguageProvider";
 import Link from "next/link";
 
 const charVariants = {
@@ -74,6 +75,9 @@ function SocialIcon({ icon }: { icon: string }) {
 }
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+  const translatedLines = (t.hero as Record<string, unknown>).lines as string[];
+
   return (
     <section className="relative flex flex-col items-center justify-center w-full min-h-[calc(100vh-4rem)] px-6 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -82,7 +86,7 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 max-w-4xl w-full flex flex-col items-center text-center">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -92,7 +96,7 @@ export default function HeroSection() {
           <span className="text-xs font-mono text-muted tracking-wider uppercase">
             Available
           </span>
-        </motion.div>
+        </motion.div> */}
 
         <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none overflow-hidden">
           {mainTitle.split("").map((char, i) => (
@@ -124,7 +128,7 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-8 flex items-center gap-3 flex-wrap justify-center">
-          {heroLines.map((line, i) => (
+          {translatedLines.map((line: string, i: number) => (
             <motion.span
               key={line}
               custom={i}
@@ -134,7 +138,7 @@ export default function HeroSection() {
               className="text-sm sm:text-base font-mono text-muted tracking-wide"
             >
               {line}
-              {i < heroLines.length - 1 && (
+              {i < translatedLines.length - 1 && (
                 <span className="mx-2 text-border">/</span>
               )}
             </motion.span>
@@ -147,7 +151,7 @@ export default function HeroSection() {
           transition={{ delay: 2.4, duration: 0.6 }}
           className="mt-6 text-lg sm:text-xl font-light text-foreground/70 max-w-lg"
         >
-          {subTitle}
+          {(t.hero as Record<string, string>).subtitle}
         </motion.p>
 
         <motion.div
@@ -189,7 +193,7 @@ export default function HeroSection() {
             href="/social"
             className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background font-medium text-sm hover:bg-accent transition-colors duration-300"
           >
-            Explore My World
+            {(t.hero as Record<string, string>).explore}
             <motion.span
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

@@ -4,6 +4,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { aboutConfig } from "@/config/about.data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const charVariants = {
   hidden: { opacity: 0, y: 60, rotateX: -90 },
@@ -233,13 +234,13 @@ function TypingLine({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-function TimelineSection() {
+function TimelineSection({ timeline }: { timeline: { year: string; title: string; description: string }[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <div ref={ref} className="space-y-6">
-      {aboutConfig.timeline.map((item, i) => (
+      {timeline.map((item, i) => (
         <motion.div
           key={item.year}
           initial={{ opacity: 0, x: -20 }}
@@ -258,7 +259,7 @@ function TimelineSection() {
               transition={{ delay: 0.3 + i * 0.15, type: "spring", stiffness: 300, damping: 20 }}
               className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5"
             />
-            {i < aboutConfig.timeline.length - 1 && (
+            {i < timeline.length - 1 && (
               <motion.div
                 initial={{ height: 0 }}
                 animate={isInView ? { height: "2rem" } : {}}
@@ -280,8 +281,8 @@ function TimelineSection() {
   );
 }
 
-function Marquee() {
-  const items = [...aboutConfig.roles, ...aboutConfig.roles];
+function Marquee({ roles }: { roles: string[] }) {
+  const items = [...roles, ...roles];
 
   return (
     <div className="w-full overflow-hidden py-8 border-y border-border">
@@ -304,13 +305,13 @@ function Marquee() {
   );
 }
 
-function InterestGrid() {
+function InterestGrid({ items }: { items: { label: string; emoji: string }[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-30px" });
 
   return (
     <div ref={ref} className="grid grid-cols-2 gap-2">
-      {aboutConfig.interests.map((item, i) => (
+      {items.map((item, i) => (
         <motion.div
           key={item.label}
           initial={{ opacity: 0, scale: 0.8 }}
@@ -333,6 +334,14 @@ function InterestGrid() {
 }
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+  const about = t.about as Record<string, unknown>;
+  const cards = about.cards as Record<string, string>;
+  const translatedTimeline = about.timeline as { year: string; title: string; description: string }[];
+  const translatedInterests = about.interests as { label: string; emoji: string }[];
+  const translatedCurrently = about.currently as string[];
+  const translatedRoles = about.roles as string[];
+
   return (
     <div className="relative">
       <section className="relative flex flex-col items-center justify-center py-28 sm:py-36 px-6 overflow-hidden">
@@ -353,7 +362,7 @@ export default function AboutPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono text-accent tracking-widest uppercase"
           >
-            Who am I
+            {(about as Record<string, string>).whoAmI}
           </motion.span>
 
           <h1 className="mt-6 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none overflow-hidden [perspective:600px]">
@@ -390,12 +399,12 @@ export default function AboutPage() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="mt-6 text-base sm:text-lg font-light text-foreground/50 max-w-md mx-auto font-mono"
           >
-            {aboutConfig.tagline}
+            {(about as Record<string, string>).tagline}
           </motion.p>
         </motion.div>
       </section>
 
-      <Marquee />
+      <Marquee roles={translatedRoles} />
 
       <section className="relative w-full py-16 sm:py-24 px-6">
         <div className="max-w-5xl mx-auto">
@@ -405,10 +414,10 @@ export default function AboutPage() {
               delay={0.1}
             >
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                Bio
+                {cards.bio}
               </span>
               <div className="mt-4">
-                <WordReveal text={aboutConfig.bio} delay={0.3} />
+                <WordReveal text={(about as Record<string, string>).bio as string} delay={0.3} />
               </div>
               <motion.div
                 className="mt-6 h-px w-16 bg-border relative overflow-hidden"
@@ -425,10 +434,10 @@ export default function AboutPage() {
 
             <BentoCard delay={0.2}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                Currently
+                {cards.currently}
               </span>
               <div className="mt-4 space-y-3">
-                {aboutConfig.currently.map((item, i) => (
+                {translatedCurrently.map((item, i) => (
                   <TypingLine key={item} text={item} delay={0.4 + i * 0.15} />
                 ))}
               </div>
@@ -441,25 +450,25 @@ export default function AboutPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-glow" />
                 <span className="text-[10px] font-mono text-foreground/30 tracking-wider uppercase">
-                  Active now
+                  {cards.activeNow}
                 </span>
               </motion.div>
             </BentoCard>
 
             <BentoCard delay={0.3}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                Philosophy
+                {cards.philosophy}
               </span>
               <div className="mt-4">
                 <p className="text-sm italic text-foreground/60 leading-relaxed">
-                  &ldquo;{aboutConfig.philosophy}&rdquo;
+                  &ldquo;{(about as Record<string, string>).philosophy}&rdquo;
                 </p>
               </div>
             </BentoCard>
 
             <BentoCard colSpan="sm:col-span-2" delay={0.35}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                Tech Stack
+                {cards.techStack}
               </span>
               <div className="mt-2">
                 <OrbitingTags items={aboutConfig.techStack} />
@@ -468,19 +477,19 @@ export default function AboutPage() {
 
             <BentoCard delay={0.4}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                Interests
+                {cards.interests}
               </span>
               <div className="mt-3">
-                <InterestGrid />
+                <InterestGrid items={translatedInterests} />
               </div>
             </BentoCard>
 
             <BentoCard colSpan="sm:col-span-2" delay={0.45}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                Journey
+                {cards.journey}
               </span>
               <div className="mt-4">
-                <TimelineSection />
+                <TimelineSection timeline={translatedTimeline} />
               </div>
             </BentoCard>
 
@@ -503,13 +512,13 @@ export default function AboutPage() {
                 <span className="text-accent">&infin;</span>
               </motion.div>
               <p className="mt-3 text-xs text-foreground/40 font-mono tracking-wider">
-                THINGS TO LEARN
+                {cards.thingsToLearn}
               </p>
               <Link
                 href="/contact"
                 className="mt-4 text-xs font-mono text-accent hover:text-accent/80 transition-colors flex items-center gap-1"
               >
-                Get in touch
+                {cards.getInTouch}
                 <motion.span
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}

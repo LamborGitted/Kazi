@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { appName } from "@/config/header.data";
 import { socialLinks } from "@/config/home.data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 function SocialIcon({ icon }: { icon: string }) {
   switch (icon) {
@@ -39,6 +40,8 @@ function SocialIcon({ icon }: { icon: string }) {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const { t } = useLanguage();
+  const footer = t.footer as Record<string, string>;
 
   return (
     <footer className="relative w-full mt-auto">
@@ -74,13 +77,13 @@ export default function Footer() {
               className="text-xs uppercase tracking-[0.2em] text-accent font-medium"
               style={{ fontFamily: "var(--font-geist-mono)" }}
             >
-              About
+              {footer.about}
             </span>
             <p
               className="text-sm leading-relaxed max-w-xs"
               style={{ color: "var(--muted)" }}
             >
-              Personal corner on the internet. Building things, playing rhythm games, and exploring the web.
+              {footer.aboutDescription}
             </p>
             <div className="flex items-center gap-2 mt-2">
               <span
@@ -90,7 +93,7 @@ export default function Footer() {
                 className="text-xs tracking-wider uppercase"
                 style={{ color: "var(--muted)", fontFamily: "var(--font-geist-mono)" }}
               >
-                Online
+                {footer.online}
               </span>
             </div>
           </div>
@@ -100,15 +103,15 @@ export default function Footer() {
               className="text-xs uppercase tracking-[0.2em] text-accent font-medium"
               style={{ fontFamily: "var(--font-geist-mono)" }}
             >
-              Navigation
+              {footer.navigation}
             </span>
             <nav className="flex flex-col gap-1.5">
               {[
-                { label: "Home", href: "/" },
-                { label: "About", href: "/about" },
-                { label: "Blog", href: "/blog" },
-                { label: "Social", href: "/social" },
-                { label: "Contact", href: "/contact" },
+                { label: footer.home, href: "/" },
+                { label: footer.about, href: "/about" },
+                { label: (t.nav as Record<string, string>).blog, href: "/blog" },
+                { label: (t.nav as Record<string, string>).social, href: "/social" },
+                { label: (t.nav as Record<string, string>).contact, href: "/contact" },
               ].map((item) => (
                 <Link
                   key={item.href}
@@ -142,7 +145,7 @@ export default function Footer() {
               className="text-xs uppercase tracking-[0.2em] text-accent font-medium"
               style={{ fontFamily: "var(--font-geist-mono)" }}
             >
-              Connect
+              {footer.connect}
             </span>
             <div className="flex flex-wrap gap-2">
               {socialLinks.map((link, i) => (
@@ -244,7 +247,7 @@ export default function Footer() {
               (e.currentTarget as HTMLElement).style.color = "var(--muted)";
             }}
           >
-            Back to top
+            {footer.backToTop}
             <svg
               className="w-3 h-3 transition-transform duration-300 group-hover:-translate-y-0.5"
               viewBox="0 0 12 12"
@@ -266,7 +269,7 @@ export default function Footer() {
               opacity: 0.5,
             }}
           >
-            Designed with intent
+            {footer.designedWith}
           </span>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const charVariants = {
   hidden: { opacity: 0, y: 60, rotateX: -90 },
@@ -104,6 +105,8 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
+  const { t } = useLanguage();
+  const contact = t.contact as Record<string, string>;
 
   const formRef = useRef(null);
   const formInView = useInView(formRef, { once: true, margin: "-60px" });
@@ -147,11 +150,11 @@ export default function ContactPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono text-accent tracking-widest uppercase"
           >
-            Get in touch
+            {contact.subtitle}
           </motion.span>
 
           <h1 className="mt-6 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none overflow-hidden [perspective:600px]">
-            {"CONTACT".split("").map((char, i) => (
+            {contact.heading.split("").map((char, i) => (
               <motion.span
                 key={i}
                 custom={i}
@@ -184,7 +187,7 @@ export default function ContactPage() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="mt-6 text-base sm:text-lg font-light text-foreground/50 max-w-md mx-auto"
           >
-            Have a question or want to work together? Drop me a message.
+            {contact.description}
           </motion.p>
         </motion.div>
       </section>
@@ -244,16 +247,16 @@ export default function ContactPage() {
                       </svg>
                     </motion.div>
                     <h3 className="text-xl font-bold tracking-tight mb-2">
-                      Message Sent
+                      {contact.sent}
                     </h3>
                     <p className="text-sm text-foreground/50">
-                      Thank you for reaching out. I&apos;ll get back to you soon.
+                      {contact.sentDescription}
                     </p>
                     <button
                       onClick={() => setFormState("idle")}
                       className="mt-8 text-sm font-mono text-accent hover:text-accent/80 transition-colors"
                     >
-                      Send another message &rarr;
+                      {contact.sendAnother}
                     </button>
                   </motion.div>
                 ) : (
@@ -267,14 +270,14 @@ export default function ContactPage() {
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <FloatingLabel
-                        label="Name"
+                        label={contact.name}
                         name="name"
                         value={form.name}
                         onChange={(v) => setForm((f) => ({ ...f, name: v }))}
                         delay={0.1}
                       />
                       <FloatingLabel
-                        label="Email"
+                        label={contact.email}
                         name="email"
                         type="email"
                         value={form.email}
@@ -284,7 +287,7 @@ export default function ContactPage() {
                     </div>
 
                     <FloatingLabel
-                      label="Subject"
+                      label={contact.subject}
                       name="subject"
                       value={form.subject}
                       onChange={(v) => setForm((f) => ({ ...f, subject: v }))}
@@ -292,7 +295,7 @@ export default function ContactPage() {
                     />
 
                     <FloatingLabel
-                      label="Message"
+                      label={contact.message}
                       name="message"
                       textarea
                       value={form.message}
@@ -316,14 +319,14 @@ export default function ContactPage() {
                           transition-all duration-300
                           overflow-hidden"
                       >
-                        <span
-                          className={`inline-flex items-center gap-2 transition-all duration-300 ${
-                            formState === "sending"
-                              ? "opacity-0"
-                              : "opacity-100"
-                          }`}
-                        >
-                          Send Message
+                          <span
+                            className={`inline-flex items-center gap-2 transition-all duration-300 ${
+                              formState === "sending"
+                                ? "opacity-0"
+                                : "opacity-100"
+                            }`}
+                          >
+                            {contact.send}
                           <motion.span
                             animate={{ x: [0, 4, 0] }}
                             transition={{
@@ -371,7 +374,7 @@ export default function ContactPage() {
                           animate={{ opacity: 1, y: 0 }}
                           className="mt-3 text-xs text-red-400 text-center"
                         >
-                          Something went wrong. Please try again.
+                          {contact.error}
                         </motion.p>
                       )}
                     </motion.div>

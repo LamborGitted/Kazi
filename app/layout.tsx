@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Switcher from "@/components/Switcher";
 import ThemeProvider from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import { title , description } from "@/config/base.data";
 
 
@@ -37,11 +38,13 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col overflow-x-hidden noise-overlay">
 
         <ThemeProvider>
-          <Switcher>
-            <Header />
-            {children}
-            <Footer />
-          </Switcher>
+          <LanguageProvider>
+            <Switcher>
+              <Header />
+              {children}
+              <Footer />
+            </Switcher>
+          </LanguageProvider>
         </ThemeProvider>
 
       </body>

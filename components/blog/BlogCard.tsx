@@ -12,6 +12,7 @@ interface BlogCardProps {
   tags: string[];
   readingTime: number;
   index: number;
+  minReadLabel?: string;
 }
 
 export default function BlogCard({
@@ -22,6 +23,7 @@ export default function BlogCard({
   tags,
   readingTime,
   index,
+  minReadLabel = "min read",
 }: BlogCardProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
@@ -87,7 +89,7 @@ export default function BlogCard({
                   fontFamily: "var(--font-geist-mono)",
                 }}
               >
-                {readingTime} min read
+                {readingTime} {minReadLabel}
               </span>
             </div>
 

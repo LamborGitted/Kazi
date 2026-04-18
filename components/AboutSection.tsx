@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { briefIntro } from "@/config/home.data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface TechItem {
   label: string;
@@ -61,6 +61,7 @@ export default function AboutSection() {
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const lineRef = useRef(null);
   const lineInView = useInView(lineRef, { once: true, margin: "-50px" });
+  const { t } = useLanguage();
 
   return (
     <section className="relative w-full py-32 px-6" ref={sectionRef}>
@@ -71,7 +72,7 @@ export default function AboutSection() {
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <span className="text-xs font-mono text-accent tracking-widest uppercase">
-            About
+            {(t.about as Record<string, string>).sectionTitle}
           </span>
         </motion.div>
 
@@ -90,7 +91,7 @@ export default function AboutSection() {
           transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
           className="mt-8 text-xl sm:text-2xl font-light leading-relaxed text-foreground/80"
         >
-          {briefIntro}
+          {(t.about as Record<string, string>).briefIntro}
         </motion.p>
 
         <motion.div

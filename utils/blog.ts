@@ -8,6 +8,7 @@ import remarkRehype from "remark-rehype";
 import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import rehypeStringify from "rehype-stringify";
+import type { Locale } from "@/config/i18n/locales";
 
 export interface BlogPost {
   slug: string;
@@ -58,6 +59,33 @@ function calculateReadingTime(content: string): number {
   return Math.max(1, Math.ceil(words / wordsPerMinute));
 }
 
+function resolvePostPath(
+  slug: string,
+  locale: Locale
+): { filePath: string; effectiveSlug: string } | null {
+  if (locale === "zh") {
+    const zhPath = path.join(postsDirectory, "zh", `${slug}.md`);
+    const zhPathMdx = path.join(postsDirectory, "zh", `${slug}.mdx`);
+    if (fs.existsSync(zhPath)) {
+      return { filePath: zhPath, effectiveSlug: slug };
+    }
+    if (fs.existsSync(zhPathMdx)) {
+      return { filePath: zhPathMdx, effectiveSlug: slug };
+    }
+  }
+
+  const enPath = path.join(postsDirectory, `${slug}.md`);
+  const enPathMdx = path.join(postsDirectory, `${slug}.mdx`);
+  if (fs.existsSync(enPath)) {
+    return { filePath: enPath, effectiveSlug: slug };
+  }
+  if (fs.existsSync(enPathMdx)) {
+    return { filePath: enPathMdx, effectiveSlug: slug };
+  }
+
+  return null;
+}
+
 export async function getPostSlugs(): Promise<string[]> {
   if (!fs.existsSync(postsDirectory)) return [];
   return fs
@@ -66,14 +94,16 @@ export async function getPostSlugs(): Promise<string[]> {
     .map((file) => file.replace(/\.mdx?$/, ""));
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost> {
-  const filePath = path.join(
-    postsDirectory,
-    fs.existsSync(path.join(postsDirectory, `${slug}.mdx`))
-      ? `${slug}.mdx`
-      : `${slug}.md`
-  );
+export async function getPostBySlug(
+  slug: string,
+  locale: Locale = "en"
+): Promise<BlogPost> {
+  const resolved = resolvePostPath(slug, locale);
+  if (!resolved) {
+    throw new Error(`Post not found: ${slug}`);
+  }
 
+  const { filePath } = resolved;
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
 
@@ -102,9 +132,13 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
   };
 }
 
-export async function getAllPosts(): Promise<BlogPostMeta[]> {
+export async function getAllPosts(
+  locale: Locale = "en"
+): Promise<BlogPostMeta[]> {
   const slugs = await getPostSlugs();
-  const posts = await Promise.all(slugs.map(getPostBySlug));
+  const posts = await Promise.all(
+    slugs.map((slug) => getPostBySlug(slug, locale))
+  );
 
   return posts
     .map(
@@ -122,10 +156,10 @@ export async function getAllPosts(): Promise<BlogPostMeta[]> {
     );
 }
 
-export async function getAllTags(): Promise<
-  { tag: string; count: number }[]
-> {
-  const posts = await getAllPosts();
+export async function getAllTags(
+  locale: Locale = "en"
+): Promise<{ tag: string; count: number }[]> {
+  const posts = await getAllPosts(locale);
   const tagMap = new Map<string, number>();
 
   posts.forEach((post) => {

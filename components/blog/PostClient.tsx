@@ -5,19 +5,31 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import MarkdownRenderer from "@/components/blog/MarkdownRenderer";
 import TableOfContents from "@/components/blog/TableOfContents";
+import { useLanguage } from "@/components/LanguageProvider";
+
+interface PostData {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  tags: string[];
+  htmlContent: string;
+  headings: { id: string; text: string; level: number }[];
+  readingTime: number;
+}
 
 interface PostClientProps {
-  post: {
+  post: PostData;
+  postZh: PostData;
+  recentPosts: {
     slug: string;
     title: string;
     date: string;
     excerpt: string;
     tags: string[];
-    htmlContent: string;
-    headings: { id: string; text: string; level: number }[];
     readingTime: number;
-  };
-  recentPosts: {
+  }[];
+  recentPostsZh: {
     slug: string;
     title: string;
     date: string;
@@ -27,17 +39,25 @@ interface PostClientProps {
   }[];
 }
 
-export default function PostClient({ post, recentPosts }: PostClientProps) {
+export default function PostClient({ post, postZh, recentPosts, recentPostsZh }: PostClientProps) {
   const headerRef = useRef(null);
   const isInView = useInView(headerRef, { once: true, margin: "-50px" });
   const lineRef = useRef(null);
   const lineInView = useInView(lineRef, { once: true, margin: "-20px" });
+  const { t, locale } = useLanguage();
+  const blog = t.blog as Record<string, string>;
 
-  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const currentPost = locale === "zh" && postZh ? postZh : post;
+  const currentRecent = locale === "zh" ? recentPostsZh : recentPosts;
+
+  const formattedDate = new Date(currentPost.date).toLocaleDateString(
+    locale === "zh" ? "zh-CN" : "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  );
 
   return (
     <div className="relative w-full min-h-screen">
@@ -80,7 +100,7 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
                   >
                     <path d="M8 2L4 6L8 10" />
                   </svg>
-                  Back to Blog
+                  {blog.backToBlog}
                 </Link>
 
                 <div className="flex items-center gap-3 mb-4">
@@ -104,16 +124,16 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
                       fontFamily: "var(--font-geist-mono)",
                     }}
                   >
-                    {post.readingTime} min read
+                    {currentPost.readingTime} {blog.minRead}
                   </span>
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-                  {post.title}
+                  {currentPost.title}
                 </h1>
 
                 <div className="flex flex-wrap gap-2 mt-5">
-                  {post.tags.map((tag) => (
+                  {currentPost.tags.map((tag) => (
                     <Link
                       key={tag}
                       href={`/blog?tag=${tag}`}
@@ -147,7 +167,7 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
               </motion.div>
 
               <div className="mt-10">
-                <MarkdownRenderer htmlContent={post.htmlContent} />
+                <MarkdownRenderer htmlContent={currentPost.htmlContent} />
               </div>
 
               <div
@@ -163,10 +183,10 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
                     fontFamily: "var(--font-geist-mono)",
                   }}
                 >
-                  More Posts
+                  {blog.morePosts}
                 </span>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {recentPosts.map((rp) => (
+                  {currentRecent.map((rp) => (
                     <Link key={rp.slug} href={`/blog/${rp.slug}`}>
                       <motion.div
                         whileHover={{ y: -4 }}
@@ -198,7 +218,7 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
               className="hidden lg:block lg:w-[260px] shrink-0"
             >
               <div className="sticky top-24">
-                <TableOfContents headings={post.headings} />
+                <TableOfContents headings={currentPost.headings} />
 
                 <div
                   className="mt-8 rounded-xl border p-5"
@@ -211,7 +231,7 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
                       fontFamily: "var(--font-geist-mono)",
                     }}
                   >
-                    Share
+                    {blog.share}
                   </span>
                   <div className="mt-3 flex gap-2">
                     <button
@@ -225,7 +245,7 @@ export default function PostClient({ post, recentPosts }: PostClientProps) {
                         fontFamily: "var(--font-geist-mono)",
                       }}
                     >
-                      Copy Link
+                      {blog.copyLink}
                     </button>
                   </div>
                 </div>

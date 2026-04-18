@@ -8,13 +8,15 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getAllPosts();
-  const tags = await getAllTags();
+  const [posts, tags] = await Promise.all([getAllPosts("en"), getAllTags("en")]);
+  const [postsZh, tagsZh] = await Promise.all([getAllPosts("zh"), getAllTags("zh")]);
 
   return (
     <BlogClient
       posts={posts}
+      postsZh={postsZh}
       tags={tags}
+      tagsZh={tagsZh}
     />
   );
 }
