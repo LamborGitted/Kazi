@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { withCache } from "@/utils/server-cache";
 
 let tokenCache: { token: string; expires: number } | null = null;
 
@@ -51,42 +52,49 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "uid is required" }, { status: 400 });
   }
 
-  let user = null;
-  try {
-    const userData = await osuFetch(`/users/${uid}/${mode}`);
-    if (userData?.id) {
-      user = {
-        username: userData.username,
-        avatar_url: userData.avatar_url,
-        global_rank: userData.statistics?.global_rank ?? null,
-        pp: userData.statistics?.pp ?? 0,
-        country_code: userData.country?.code ?? "",
-      };
-    }
-  } catch {}
+  const result = await withCache(
+    `osu:${uid}:${mode}`,
+    async () => {
+      let user = null;
+      try {
+        const userData = await osuFetch(`/users/${uid}/${mode}`);
+        if (userData?.id) {
+          user = {
+            username: userData.username,
+            avatar_url: userData.avatar_url,
+            global_rank: userData.statistics?.global_rank ?? null,
+            pp: userData.statistics?.pp ?? 0,
+            country_code: userData.country?.code ?? "",
+          };
+        }
+      } catch {}
 
-  let scores: unknown[] = [];
-  try {
-    const scoresData = await osuFetch(
-      `/users/${uid}/scores/best?limit=6&mode=${mode}`
-    );
-    if (Array.isArray(scoresData)) {
-      scores = scoresData.map((s: Record<string, unknown>) => ({
-        id: s.id,
-        title: (s.beatmapset as Record<string, unknown>)?.title ?? "",
-        difficulty: (s.beatmap as Record<string, unknown>)?.version ?? "",
-        rank: s.rank ?? "",
-        accuracy: s.accuracy
-          ? Math.round((s.accuracy as number) * 10000) / 100
-          : 0,
-        url: (s.beatmap as Record<string, unknown>)?.url
-          ? `https://osu.ppy.sh/beatmaps/${
-              (s.beatmap as Record<string, unknown>).id
-            }`
-          : "",
-      }));
-    }
-  } catch {}
+      let scores: unknown[] = [];
+      try {
+        const scoresData = await osuFetch(
+          `/users/${uid}/scores/best?limit=6&mode=${mode}`
+        );
+        if (Array.isArray(scoresData)) {
+          scores = scoresData.map((s: Record<string, unknown>) => ({
+            id: s.id,
+            title: (s.beatmapset as Record<string, unknown>)?.title ?? "",
+            difficulty: (s.beatmap as Record<string, unknown>)?.version ?? "",
+            rank: s.rank ?? "",
+            accuracy: s.accuracy
+              ? Math.round((s.accuracy as number) * 10000) / 100
+              : 0,
+            url: (s.beatmap as Record<string, unknown>)?.url
+              ? `https://osu.ppy.sh/beatmaps/${
+                  (s.beatmap as Record<string, unknown>).id
+                }`
+              : "",
+          }));
+        }
+      } catch {}
 
-  return NextResponse.json({ user, scores });
+      return { user, scores };
+    }
+  );
+
+  return NextResponse.json(result);
 }

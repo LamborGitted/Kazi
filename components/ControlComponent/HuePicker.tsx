@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function HuePicker() {
   const [hue, setHue] = useState(0);
@@ -9,33 +9,39 @@ export default function HuePicker() {
 
   const color = `hsl(${hue}, 100%, 50%)`;
 
-  function updateHue(clientX: number) {
-    const rect = barRef.current!.getBoundingClientRect();
+  const updateHue = useCallback((clientX: number) => {
+    const rect = barRef.current?.getBoundingClientRect();
+    if (!rect) return;
     const x = clientX - rect.left;
-
     const percent = Math.min(Math.max(x / rect.width, 0), 1);
     setHue(Math.round(percent * 360));
-  }
+  }, []);
 
-  function onMouseDown(e: React.MouseEvent) {
-    draggingRef.current = true;
-    updateHue(e.clientX);
-  }
+  const onMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      draggingRef.current = true;
+      updateHue(e.clientX);
+    },
+    [updateHue]
+  );
 
-  function onMouseMove(e: MouseEvent) {
-    if (!draggingRef.current) return;
-    updateHue(e.clientX);
-  }
+  useEffect(() => {
+    function onMouseMove(e: MouseEvent) {
+      if (!draggingRef.current) return;
+      updateHue(e.clientX);
+    }
 
-  function onMouseUp() {
-    draggingRef.current = false;
-  }
+    function onMouseUp() {
+      draggingRef.current = false;
+    }
 
-  // 绑定全局监听
-  if (typeof window !== "undefined") {
-    window.onmousemove = onMouseMove;
-    window.onmouseup = onMouseUp;
-  }
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [updateHue]);
 
   return (
     <div className="w-50 h-16 flex items-center justify-center">

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { github_config } from "@/config/social.data";
 import Image from "next/image";
+import { useSocialCard } from "@/components/SocialComponent/SocialCard";
 
 interface GitHubUser {
   avatar_url: string;
@@ -18,85 +19,27 @@ interface GitHubRepo {
   html_url: string;
 }
 
-function extractDominantColor(imageSrc: string): Promise<string> {
-  return new Promise((resolve) => {
-    const img = new window.Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const size = 50;
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(img, 0, 0, size, size);
-      const data = ctx.getImageData(0, 0, size, size).data;
-
-      let r = 0,
-        g = 0,
-        b = 0,
-        count = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        const pr = data[i],
-          pg = data[i + 1],
-          pb = data[i + 2];
-        const lum = (pr * 0.299 + pg * 0.587 + pb * 0.114) / 255;
-        if (lum > 0.08 && lum < 0.92) {
-          r += pr;
-          g += pg;
-          b += pb;
-          count++;
-        }
-      }
-
-      if (count === 0) {
-        resolve("59,130,246");
-        return;
-      }
-
-      r = Math.round(r / count);
-      g = Math.round(g / count);
-      b = Math.round(b / count);
-
-      // 饱和度增强，让光圈颜色更鲜艳
-      const max = Math.max(r, g, b);
-      const min = Math.min(r, g, b);
-      const mid = (max + min) / 2;
-      const boost = 1.6;
-      r = Math.min(255, Math.round(mid + (r - mid) * boost));
-      g = Math.min(255, Math.round(mid + (g - mid) * boost));
-      b = Math.min(255, Math.round(mid + (b - mid) * boost));
-
-      resolve(`${r},${g},${b}`);
-    };
-    img.onerror = () => resolve("59,130,246");
-    img.src = imageSrc;
-  });
-}
-
 export default function GithubCard() {
   const [user, setUser] = useState<GitHubUser | null>(null);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [glowColor, setGlowColor] = useState("59,130,246");
-  const [isHovered, setIsHovered] = useState(false);
+  const { glowColor, isHovered, setIsHovered } = useSocialCard(
+    github_config.background_img,
+    "59,130,246"
+  );
 
   useEffect(() => {
-    extractDominantColor(github_config.background_img).then(setGlowColor);
-
     const username = github_config.homepage_url
       .split("/")
       .filter(Boolean)
       .pop();
     if (!username) return;
 
-    fetch(`https://api.github.com/users/${username}`)
+    fetch(`/api/github?username=${username}`)
       .then((res) => res.json())
-      .then(setUser);
-
-    fetch(
-      `https://api.github.com/search/repositories?q=user:${username}&sort=stars&order=desc&per_page=6`
-    )
-      .then((res) => res.json())
-      .then((data) => setRepos(data.items || []));
+      .then((data) => {
+        if (data.user) setUser(data.user);
+        if (data.repos) setRepos(data.repos);
+      });
   }, []);
 
   if (!github_config.show) return null;
@@ -112,7 +55,6 @@ export default function GithubCard() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 左边背景图 */}
       <div className="w-2/3 relative">
         <Image
           src={github_config.background_img}
@@ -122,9 +64,7 @@ export default function GithubCard() {
         />
       </div>
 
-      {/* 右边：个人信息 + 热门仓库 */}
       <div className="w-1/3 h-full flex flex-col bg-zinc-800 p-4 overflow-hidden z-2">
-        {/* 个人信息 */}
         {user && (
           <div className="flex items-center gap-3 mb-4">
             <Image
@@ -151,7 +91,6 @@ export default function GithubCard() {
           </div>
         )}
 
-        {/* 热门仓库 3×2 卡片 */}
         <div className="grid grid-cols-2 gap-1.5 flex-1 content-start">
           {repos.map((repo) => (
             <a
@@ -180,7 +119,6 @@ export default function GithubCard() {
           ))}
         </div>
 
-        {/* 按钮 */}
         <button
           className="text-zinc-300 text-sm bg-zinc-700 font-bold px-4 py-1.5 rounded-lg hover:scale-105 transition-all mt-3 w-full"
           style={

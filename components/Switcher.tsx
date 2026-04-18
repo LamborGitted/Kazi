@@ -14,7 +14,7 @@ export default function Switcher({
     
 
     return (
-        <main className="min-h-full flex flex-col bg-zinc-900 dark:bg-zinc-300">
+        <main className="min-h-full flex flex-col bg-[var(--background)]">
         <AnimatePresence mode="wait"
         >
             <motion.div className="min-h-screen flex flex-col"

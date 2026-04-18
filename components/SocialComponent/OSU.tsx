@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { osu_config } from "@/config/social.data";
 import Image from "next/image";
+import { useSocialCard } from "@/components/SocialComponent/SocialCard";
 
 interface OsuUser {
   username: string;
@@ -19,64 +20,6 @@ interface OsuScore {
   rank: string;
   accuracy: number;
   url: string;
-}
-
-function extractDominantColor(imageSrc: string): Promise<string> {
-  return new Promise((resolve) => {
-    const img = new window.Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      try {
-        const canvas = document.createElement("canvas");
-        const size = 50;
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext("2d")!;
-        ctx.drawImage(img, 0, 0, size, size);
-        const data = ctx.getImageData(0, 0, size, size).data;
-
-        let r = 0,
-          g = 0,
-          b = 0,
-          count = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          const pr = data[i],
-            pg = data[i + 1],
-            pb = data[i + 2];
-          const lum = (pr * 0.299 + pg * 0.587 + pb * 0.114) / 255;
-          if (lum > 0.08 && lum < 0.92) {
-            r += pr;
-            g += pg;
-            b += pb;
-            count++;
-          }
-        }
-
-        if (count === 0) {
-          resolve("255,102,170");
-          return;
-        }
-
-        r = Math.round(r / count);
-        g = Math.round(g / count);
-        b = Math.round(b / count);
-
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        const mid = (max + min) / 2;
-        const boost = 1.6;
-        r = Math.min(255, Math.round(mid + (r - mid) * boost));
-        g = Math.min(255, Math.round(mid + (g - mid) * boost));
-        b = Math.min(255, Math.round(mid + (b - mid) * boost));
-
-        resolve(`${r},${g},${b}`);
-      } catch {
-        resolve("255,102,170");
-      }
-    };
-    img.onerror = () => resolve("255,102,170");
-    img.src = imageSrc;
-  });
 }
 
 function formatRank(rank: number | null): string {
@@ -121,15 +64,15 @@ type OsuMode = (typeof OSU_MODES)[number]["value"];
 export default function OsuCard() {
   const [user, setUser] = useState<OsuUser | null>(null);
   const [scores, setScores] = useState<OsuScore[]>([]);
-  const [glowColor, setGlowColor] = useState("255,102,170");
-  const [isHovered, setIsHovered] = useState(false);
+  const { glowColor, isHovered, setIsHovered } = useSocialCard(
+    osu_config.background_img,
+    "255,102,170"
+  );
   const [mode, setMode] = useState<OsuMode>(
     () => (osu_config.default_mode as OsuMode) || "osu"
   );
 
   useEffect(() => {
-    extractDominantColor(osu_config.background_img).then(setGlowColor);
-
     const uid = osu_config.homepage_url
       .split("/")
       .filter(Boolean)
@@ -157,7 +100,6 @@ export default function OsuCard() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 左边背景图 */}
       <div className="w-2/3 relative">
         <Image
           src={osu_config.background_img}
@@ -167,9 +109,7 @@ export default function OsuCard() {
         />
       </div>
 
-      {/* 右边：个人信息 + 最近成绩 */}
       <div className="w-1/3 h-full flex flex-col bg-zinc-800 p-4 overflow-hidden z-2">
-        {/* 个人信息 */}
         {user && (
           <div className="flex items-center gap-3 mb-4">
             <Image
@@ -213,7 +153,6 @@ export default function OsuCard() {
           </div>
         )}
 
-        {/* 最好成绩 3×2 卡片 */}
         <div className="grid grid-cols-2 gap-1.5 flex-1 content-start">
           {scores.map((score) => (
             <a
@@ -244,7 +183,6 @@ export default function OsuCard() {
           ))}
         </div>
 
-        {/* 按钮 */}
         <button
           className="text-zinc-300 text-sm bg-zinc-700 font-bold px-4 py-1.5 rounded-lg hover:scale-105 transition-all mt-3 w-full"
           style={
