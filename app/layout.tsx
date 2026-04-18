@@ -4,9 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Switcher from "@/components/Switcher";
-import Image from "next/image";
+import ThemeProvider from "@/components/ThemeProvider";
 import { title , description } from "@/config/base.data";
-import Control from "@/components/Control";
 
 
 const geistSans = Geist({
@@ -32,17 +31,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col overflow-x-hidden noise-overlay">
 
-        <Switcher>
-          <Header />
-          {children}
-          <Footer />
-        </Switcher>
+        <ThemeProvider>
+          <Switcher>
+            <Header />
+            {children}
+            <Footer />
+          </Switcher>
+        </ThemeProvider>
 
-        <Image src="/background.jpg" alt="background" fill className="fixed top-0 left-0 w-full h-full object-cover opacity-10 -z-10" />
       </body>
     </html>
   );

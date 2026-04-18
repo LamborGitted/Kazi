@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { osu_config } from "@/config/social.data";
 import Image from "next/image";
-import { useSocialCard } from "@/components/SocialComponent/SocialCard";
+import SocialCard from "@/components/SocialComponent/SocialCard";
 
 interface OsuUser {
   username: string;
@@ -22,12 +22,12 @@ interface OsuScore {
   url: string;
 }
 
-function formatRank(rank: number | null): string {
-  if (!rank) return "#---";
-  return `#${rank.toLocaleString()}`;
+function fmtRank(r: number | null): string {
+  if (!r) return "#---";
+  return `#${r.toLocaleString()}`;
 }
 
-function formatPP(pp: number): string {
+function fmtPP(pp: number): string {
   return `${Math.round(pp).toLocaleString()}pp`;
 }
 
@@ -48,26 +48,22 @@ function rankColor(rank: string): string {
     case "D":
       return "#EF5350";
     default:
-      return "#999999";
+      return "#999";
   }
 }
 
-const OSU_MODES = [
+const MODES = [
   { value: "osu", label: "osu!" },
   { value: "taiko", label: "Taiko" },
   { value: "fruits", label: "Catch" },
   { value: "mania", label: "Mania" },
 ] as const;
 
-type OsuMode = (typeof OSU_MODES)[number]["value"];
+type OsuMode = (typeof MODES)[number]["value"];
 
 export default function OsuCard() {
   const [user, setUser] = useState<OsuUser | null>(null);
   const [scores, setScores] = useState<OsuScore[]>([]);
-  const { glowColor, isHovered, setIsHovered } = useSocialCard(
-    osu_config.background_img,
-    "255,102,170"
-  );
   const [mode, setMode] = useState<OsuMode>(
     () => (osu_config.default_mode as OsuMode) || "osu"
   );
@@ -80,121 +76,113 @@ export default function OsuCard() {
     if (!uid) return;
 
     fetch(`/api/osu?uid=${uid}&mode=${mode}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user) setUser(data.user);
-        if (data.scores) setScores(data.scores);
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.user) setUser(d.user);
+        if (d.scores) setScores(d.scores);
       });
   }, [mode]);
 
   if (!osu_config.show) return null;
 
   return (
-    <div
-      className="w-[70vw] h-100 rounded-2xl overflow-hidden relative group flex transition-all duration-500"
-      style={{
-        boxShadow: isHovered
-          ? `0 0 100px rgba(${glowColor}, 0.8)`
-          : `0 0 20px rgba(${glowColor}, 0.3)`,
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <SocialCard
+      backgroundImg={osu_config.background_img}
+      fallbackColor="255,102,170"
+      homepageUrl={osu_config.homepage_url}
+      buttonLabel="View on osu!"
+      accentHex="#ff66aa"
     >
-      <div className="w-2/3 relative">
-        <Image
-          src={osu_config.background_img}
-          alt="osu!"
-          fill
-          className="object-cover group-hover:scale-105 transition duration-500 z-1"
-        />
-      </div>
-
-      <div className="w-1/3 h-full flex flex-col bg-zinc-800 p-4 overflow-hidden z-2">
-        {user && (
-          <div className="flex items-center gap-3 mb-4">
-            <Image
-              src={user.avatar_url}
-              alt={user.username}
-              width={48}
-              height={48}
-              className="w-12 h-12 rounded-full border-2 shrink-0"
-              style={{ borderColor: `rgb(${glowColor})` }}
-            />
-            <div className="min-w-0">
-              <p className="text-white font-bold text-sm truncate">
-                {user.username}
-              </p>
-              <div className="flex items-center gap-3 mt-0.5">
-                <span className="flex items-center gap-1 text-zinc-400 text-xs">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                  {formatRank(user.global_rank)}
-                </span>
-                <span className="flex items-center gap-1 text-zinc-400 text-xs">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
-                    <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
-                  </svg>
-                  {formatPP(user.pp)}
-                </span>
-                <select
-                  value={mode}
-                  onChange={(e) => setMode(e.target.value as OsuMode)}
-                  className="ml-auto bg-zinc-700 text-zinc-300 text-[10px] rounded px-1.5 py-0.5 border-none outline-none cursor-pointer appearance-none hover:bg-zinc-600 transition-colors"
-                >
-                  {OSU_MODES.map((m) => (
-                    <option key={m.value} value={m.value}>
-                      {m.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
+      <div className="flex items-center gap-4 mb-5">
+        {user ? (
+          <Image
+            src={user.avatar_url}
+            alt={user.username}
+            width={56}
+            height={56}
+            className="w-14 h-14 rounded-full ring-2 ring-[#ff66aa]/20 shrink-0"
+          />
+        ) : (
+          <div className="w-14 h-14 rounded-full bg-white/10 animate-pulse shrink-0" />
         )}
-
-        <div className="grid grid-cols-2 gap-1.5 flex-1 content-start">
-          {scores.map((score) => (
-            <a
-              key={score.id}
-              href={score.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-zinc-700/60 rounded-lg p-2.5 hover:bg-zinc-600/60 transition-colors flex flex-col"
-            >
-              <p className="text-white text-xs font-semibold truncate mb-0.5">
-                {score.title}
-              </p>
-              <p className="text-zinc-500 text-[10px] truncate">
-                {score.difficulty}
-              </p>
-              <div className="flex items-center gap-1.5 mt-auto">
-                <span
-                  className="text-xs font-black"
-                  style={{ color: rankColor(score.rank) }}
-                >
-                  {score.rank}
-                </span>
-                <span className="text-zinc-300 text-[10px]">
-                  {score.accuracy.toFixed(2)}%
-                </span>
-              </div>
-            </a>
-          ))}
+        <div className="min-w-0">
+          <h3 className="text-white text-lg font-bold tracking-tight truncate">
+            {user?.username ?? "Loading..."}
+          </h3>
+          <div className="flex items-center gap-4 mt-1">
+            <span className="flex items-center gap-1.5 text-white/40 text-xs font-mono">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-yellow-400/60">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              {user ? fmtRank(user.global_rank) : "..."}
+            </span>
+            <span className="flex items-center gap-1.5 text-white/40 text-xs font-mono">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-[#ff66aa]/60">
+                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+              </svg>
+              {user ? fmtPP(user.pp) : "..."}
+            </span>
+          </div>
         </div>
 
-        <button
-          className="text-zinc-300 text-sm bg-zinc-700 font-bold px-4 py-1.5 rounded-lg hover:scale-105 transition-all mt-3 w-full"
-          style={
-            isHovered
-              ? { backgroundColor: `rgb(${glowColor})` }
-              : undefined
-          }
-          onClick={() => window.open(osu_config.homepage_url, "_blank")}
-        >
-          View on osu! ⇁
-        </button>
+        <div className="ml-auto flex items-center gap-1 shrink-0">
+          {MODES.map((m) => (
+            <button
+              key={m.value}
+              onClick={() => setMode(m.value)}
+              className="text-[10px] font-mono px-2 py-1 rounded-lg transition-all duration-200"
+              style={{
+                background:
+                  mode === m.value
+                    ? "rgba(255,102,170,0.25)"
+                    : "rgba(255,255,255,0.04)",
+                color:
+                  mode === m.value
+                    ? "#ff66aa"
+                    : "rgba(255,255,255,0.4)",
+                border: `1px solid ${
+                  mode === m.value
+                    ? "rgba(255,102,170,0.3)"
+                    : "transparent"
+                }`,
+              }}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <div className="grid grid-cols-3 gap-2">
+        {scores.map((s) => (
+          <a
+            key={s.id}
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-xl p-3 transition-all duration-300 hover:bg-white/10"
+            style={{ background: "rgba(255,255,255,0.04)" }}
+          >
+            <p className="text-white/90 text-xs font-semibold truncate mb-0.5">
+              {s.title}
+            </p>
+            <p className="text-white/30 text-[10px] truncate mb-1.5">
+              {s.difficulty}
+            </p>
+            <div className="flex items-center gap-2">
+              <span
+                className="text-xs font-black leading-none"
+                style={{ color: rankColor(s.rank) }}
+              >
+                {s.rank}
+              </span>
+              <span className="text-white/30 text-[10px] font-mono">
+                {s.accuracy.toFixed(2)}%
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </SocialCard>
   );
 }

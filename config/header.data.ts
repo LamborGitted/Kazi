@@ -23,6 +23,8 @@ export const appName="Lantxx Homepage";
 export const navLinks : NavLink[] = [
   { id: "about", label: "About", href: "/about" },
 
+  { id: "blog", label: "Blog", href: "/blog" },
+
   { id : "Social", label: "Social", href: "/social", },
   
   { id: "contact", label: "Contact", href: "/contact" ,},
