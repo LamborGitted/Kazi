@@ -1,4 +1,4 @@
 const title :string= "Lantxx Personal Homepage";
-const description :string= "Learn more , Build more";
+const description :string= "Endless Curiosity, Boundless Creation";
 
 export { title , description };

@@ -109,6 +109,7 @@ export default function Footer() {
               {[
                 { label: footer.home, href: "/" },
                 { label: footer.about, href: "/about" },
+                { label: (t.nav as Record<string, string>).projects, href: "/projects" },
                 { label: (t.nav as Record<string, string>).blog, href: "/blog" },
                 { label: (t.nav as Record<string, string>).social, href: "/social" },
                 { label: (t.nav as Record<string, string>).contact, href: "/contact" },

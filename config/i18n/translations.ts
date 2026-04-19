@@ -8,18 +8,21 @@ const en: Translations = {
     about: "About",
     blog: "Blog",
     social: "Social",
+    projects: "Projects",
     contact: "Contact",
+    music: "Music",
   },
   hero: {
-    subtitle: "Learn more, Build more",
-    lines: ["Developer", "Creator", "Osu! Mania Player"],
-    explore: "Explore My World",
+    subtitle: "Endless Curiosity, Boundless Creation",
+    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "Minecraft Player"],
+    explore: "Explore My Cards",
   },
   about: {
     sectionTitle: "About",
     whoAmI: "Who am I",
-    tagline: "Learn more, Build more",
-    bio: "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, and creative coding. Always chasing the next challenge — whether it's shipping a side project at 3am or hitting a new personal best on osu! Mania.",
+    tagline: "Endless Curiosity, Boundless Creation",
+    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "Minecraft Player"],
+    bio: "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, Minecraft, and creative coding. Always chasing the next challenge — whether it's shipping a side project at 3am or hitting a new personal best on osu! Mania.",
     philosophy:
       "I believe the best way to learn is to build. Every project is a chance to experiment, break things, and discover something unexpected. Code is just another form of creative expression.",
     roles: [
@@ -45,22 +48,49 @@ const en: Translations = {
     ],
     timeline: [
       {
-        year: "2024",
-        title: "Building & Learning",
-        description:
-          "Started building personal homepage and open source projects",
+        year: "2007-6",
+        title: "Born",
+        description: "A new journey began",
       },
       {
-        year: "2023",
-        title: "Exploring Tech",
-        description:
-          "Deep dive into React, Next.js and modern web technologies",
+        year: "2019",
+        title: "First Steps in Programming",
+        description: "Started learning to code, teaching myself C++ and Python",
       },
       {
-        year: "2022",
-        title: "Getting Started",
-        description:
-          "Began the coding journey, learning programming fundamentals",
+        year: "2022-4",
+        title: "The Charm of Rhythm",
+        description: "Got hooked on osu!, especially Mania mode — chasing higher scores and faster reflexes",
+      },
+      {
+        year: "2025-6",
+        title: "Weaving Melodies",
+        description: "Started arranging music, creating electronic tracks and game soundtracks — turning ideas into sound",
+      },
+      {
+        year: "2025-7",
+        title: "Frontend Adventure",
+        description: "Began learning frontend development, exploring the world of the web and vanilla JS — falling deeper in love with coding",
+      },
+      {
+        year: "2025-11",
+        title: "First Vue.js Blog Project Begins",
+        description: "Continued exploring and learning in tech, constantly improving my skills",
+      },
+      {
+        year: "2025-12",
+        title: "First Vue.js Blog Project Completed",
+        description: "Gained invaluable experience from this project, fueling my drive to keep moving forward in frontend development",
+      },
+      {
+        year: "2026-3",
+        title: "React & Next.js",
+        description: "Started learning React and Next.js to build more complex, high-performance applications — quickly fell in love with component architecture and server-side rendering",
+      },
+      {
+        year: "2026-4",
+        title: "Building a React & Next.js Personal Homepage",
+        description: "Discovered wonderful libraries and tools like Framer Motion, Tailwind CSS, and more — making the build process both challenging and endlessly fun",
       },
     ],
     cards: {
@@ -117,10 +147,32 @@ const en: Translations = {
     subtitle: "Connect",
     description: "Where I share, create, and connect with the world",
   },
+  projects: {
+    heading: "PROJECTS",
+    subtitle: "What I Build",
+    description:
+      "A collection of things I've built — from open source tools to Minecraft mods.",
+    filterAll: "All",
+    filterOpensource: "Open Source",
+    filterMinecraft: "Minecraft",
+    viewProject: "View Project",
+    categories: {
+      opensource: "Open Source",
+      minecraft: "Minecraft",
+    },
+  },
+  music: {
+    heading: "MUSIC",
+    subtitle: "Listen",
+    description:
+      "Original arrangements and electronic compositions. Download and enjoy.",
+    download: "Download",
+    noTracks: "No tracks yet. Stay tuned.",
+  },
   footer: {
     about: "About",
     aboutDescription:
-      "Personal corner on the internet. Building things, playing rhythm games, and exploring the web.",
+      "My little corner of the internet. Building things, playing rhythm games, and exploring the web.",
     online: "Online",
     navigation: "Navigation",
     home: "Home",
@@ -130,7 +182,7 @@ const en: Translations = {
   },
   base: {
     title: "Lantxx Personal Homepage",
-    description: "Learn more , Build more",
+    description: "Endless Curiosity, Boundless Creation",
   },
 };
 
@@ -139,20 +191,23 @@ const zh: Translations = {
     about: "关于",
     blog: "博客",
     social: "社交",
+    projects: "项目",
     contact: "联系",
+    music: "音乐",
   },
   hero: {
-    subtitle: "学得更多，造得更多",
+    subtitle: "认知无限，创造无穷",
     lines: ["开发者", "创作者", "Osu! Mania 玩家"],
-    explore: "探索我的世界",
+    explore: "探索我的卡片",
   },
   about: {
     sectionTitle: "关于",
     whoAmI: "我是谁",
-    tagline: "学得更多，造得更多",
-    bio: "一个热爱构建和探索新技术的开发者。热衷于开源、音游和创意编程。始终在追寻下一个挑战——无论是凌晨三点上线一个副业项目，还是在 osu! Mania 上刷新个人最佳。",
+    tagline: "认知无限，创造无穷",
+    lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "Minecraft 玩家"],
+    bio: "一个热爱构建和探索新技术的开发者。热衷于开源、音游、Minecraft 和创意编程。始终在追寻下一个挑战——无论是凌晨三点上线一个副业项目，还是在 osu! Mania 上刷新个人最佳。",
     philosophy:
-      "我相信最好的学习方式就是动手构建。每个项目都是一次实验、打破常规、发现意外的机会。代码只是创意表达的另一种形式。",
+      "我相信最好的学习方式就是动手尝试。每个项目都是一次实验、打破常规、发现意外的机会。代码只是创意表达的另一种形式。",
     roles: [
       "开发者",
       "创作者",
@@ -172,19 +227,49 @@ const zh: Translations = {
     currently: ["构建个人项目", "玩 osu! Mania", "探索新框架"],
     timeline: [
       {
-        year: "2024",
-        title: "构建与学习",
-        description: "开始搭建个人主页和开源项目",
+        year: "2007-6",
+        title: "诞生",
+        description: "开启了一个新的旅程",
       },
       {
-        year: "2023",
-        title: "探索技术",
-        description: "深入学习 React、Next.js 和现代 Web 技术",
+        year: "2019",
+        title: "初入编程世界",
+        description: " 接触编程，开始自学 C++ 和 Python",
       },
       {
-        year: "2022",
-        title: "启程",
-        description: "开始编程之旅，学习编程基础",
+        year: "2022-4",
+        title: "音符跳动的魅力",
+        description: "迷上了 osu!，尤其是 Mania 模式，开始追求更高的分数和更快的反应",
+      },
+      {
+        year: "2025-6",
+        title: "成为旋律的编织者",
+        description: "开始尝试编曲，创作电子音乐和游戏配乐，享受将想法变成声音的过程",
+      },
+      {
+        year: "2025-7",
+        title: "前端开发的冒险",
+        description: "开始学习前端开发，探索网页世界和原生js，不断热爱不断学习",
+      },
+      {
+        year: "2025-11",
+        title: "第一个vue.js博客项目的开始",
+        description: "继续在技术领域探索和学习，不断提升自己的能力",
+      },
+      {
+        year: "2025-12",
+        title: "完成第一个vue.js博客项目",
+        description: "通过这个项目，积累了宝贵的经验，并激励自己继续在前端开发的道路上前进",
+      },
+      {
+        year: "2026-3",
+        title: "React和Next.js",
+        description: "为了构建更复杂和高性能的应用，开始学习React和Next.js，并迅速爱上了它们的组件化和服务端渲染特性",
+      },
+      {
+        year: "2026-4",
+        title: "着手构建由React和Next.js的个人主页",
+        description: "遇到了各种美妙的库和工具，如Framer Motion、Tailwind CSS等，使得构建过程既充满挑战又乐趣无穷",
       },
     ],
     cards: {
@@ -238,6 +323,28 @@ const zh: Translations = {
     subtitle: "连接",
     description: "我分享、创作和与世界连接的地方",
   },
+  projects: {
+    heading: "项目",
+    subtitle: "我的作品",
+    description:
+      "我构建的作品集合——从开源工具到 Minecraft 模组。",
+    filterAll: "全部",
+    filterOpensource: "开源",
+    filterMinecraft: "我的世界",
+    viewProject: "查看项目",
+    categories: {
+      opensource: "开源",
+      minecraft: "我的世界",
+    },
+  },
+  music: {
+    heading: "音乐",
+    subtitle: "聆听",
+    description:
+      "原创编曲与电子作品。下载并享受。",
+    download: "下载",
+    noTracks: "暂无曲目，敬请期待。",
+  },
   footer: {
     about: "关于",
     aboutDescription:
@@ -251,7 +358,7 @@ const zh: Translations = {
   },
   base: {
     title: "Lantxx 个人主页",
-    description: "学得更多，造得更多",
+    description: "认知无限，创造无穷",
   },
 };
 

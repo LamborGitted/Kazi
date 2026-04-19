@@ -1,8 +1,8 @@
 const mainTitle = "Lantxx";
-const subTitle = "Learn more, Build more";
-const heroLines = ["Developer", "Creator", "Osu! Mania Player"];
+const subTitle = "Endless Curiosity, Boundless Creation";
+const heroLines = ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "Minecraft Player"];
 const briefIntro =
-  "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, and creative coding.";
+  "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, Minecraft, and creative coding.";
 const socialLinks = [
   { label: "GitHub", href: "https://github.com/LamborGitted", icon: "github" },
   {
