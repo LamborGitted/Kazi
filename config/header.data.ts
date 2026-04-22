@@ -27,8 +27,6 @@ export const navLinks : NavLink[] = [
 
   { id: "projects", label: "Projects", href: "/projects" },
 
-  { id: "music", label: "Music", href: "/music" },
-
   { id : "social", label: "Social", href: "/social", },
   
   { id: "contact", label: "Contact", href: "/contact" ,},

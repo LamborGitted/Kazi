@@ -3,7 +3,7 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { aboutConfig } from "@/config/about.data";
+import { techStack } from "@/config/about.data";
 import { useLanguage } from "@/components/LanguageProvider";
 
 const charVariants = {
@@ -140,71 +140,29 @@ function OrbitingTags({
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
-    <div ref={ref} className="relative w-full h-full min-h-[200px] flex items-center justify-center">
-      <motion.div
-        className="absolute w-3 h-3 rounded-full bg-accent/20"
-        animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div className="absolute w-px h-px">
-        {items.map((item, i) => {
-          const angle = (i / items.length) * Math.PI * 2 - Math.PI / 2;
-          const radiusX = 42;
-          const radiusY = 32;
-          return (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={
-                isInView
-                  ? {
-                      opacity: 1,
-                      scale: 1,
-                      x: Math.cos(angle) * radiusX,
-                      y: Math.sin(angle) * radiusY,
-                    }
-                  : { opacity: 0, scale: 0 }
-              }
-              transition={{
-                delay: 0.3 + i * 0.1,
-                duration: 0.6,
-                type: "spring",
-                stiffness: 120,
-                damping: 15,
-              }}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-            >
-              <motion.div
-                animate={{
-                  x: [
-                    Math.cos(angle) * radiusX,
-                    Math.cos(angle + 0.1) * radiusX,
-                    Math.cos(angle) * radiusX,
-                  ],
-                  y: [
-                    Math.sin(angle) * radiusY,
-                    Math.sin(angle + 0.1) * radiusY,
-                    Math.sin(angle) * radiusY,
-                  ],
-                }}
-                transition={{
-                  duration: 6 + i * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <span className="px-3 py-1.5 rounded-full border border-border bg-surface/80 text-xs font-mono whitespace-nowrap flex items-center gap-1.5 hover:border-accent/40 transition-colors cursor-default">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full shrink-0"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  {item.label}
-                </span>
-              </motion.div>
-            </motion.div>
-          );
-        })}
-      </div>
+    <div ref={ref} className="flex flex-wrap gap-2">
+      {items.map((item, i) => (
+        <motion.span
+          key={item.label}
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+          transition={{
+            delay: 0.2 + i * 0.06,
+            duration: 0.4,
+            type: "spring",
+            stiffness: 150,
+            damping: 15,
+          }}
+          whileHover={{ scale: 1.08, y: -2 }}
+          className="px-3 py-1.5 rounded-full border border-border bg-surface/80 text-xs font-mono whitespace-nowrap flex items-center gap-1.5 hover:border-accent/40 transition-colors cursor-default"
+        >
+          <span
+            className="w-1.5 h-1.5 rounded-full shrink-0"
+            style={{ backgroundColor: item.color }}
+          />
+          {item.label}
+        </motion.span>
+      ))}
     </div>
   );
 }
@@ -653,7 +611,7 @@ export default function AboutPage() {
                 {cards.techStack}
               </span>
               <div className="mt-2">
-                <OrbitingTags items={aboutConfig.techStack} />
+                <OrbitingTags items={techStack} />
               </div>
             </BentoCard>
 
@@ -703,6 +661,24 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <div className="w-full overflow-hidden py-8 border-y border-border">
+        <motion.div
+          className="flex gap-8 whitespace-nowrap"
+          animate={{ x: ["-50%", "0%"] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+          {[...translatedRoles, ...translatedRoles].map((role, i) => (
+            <span
+              key={i}
+              className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground/[0.06] select-none flex items-center gap-8"
+            >
+              {role}
+              <span className="text-accent/20 text-lg">/</span>
+            </span>
+          ))}
+        </motion.div>
+      </div>
 
       <div className="h-20" />
     </div>

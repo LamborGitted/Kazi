@@ -19,6 +19,7 @@ export default function Switcher({
         >
             <motion.div className="min-h-screen flex flex-col"
                 key={pathname}
+                style={{ transformOrigin: "50vw 100vh" }}
                 initial={{
                     x : "-100%",
                     scale : 0.7,

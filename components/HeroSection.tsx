@@ -183,7 +183,7 @@ export default function HeroSection() {
           ))}
         </motion.div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 3.5, duration: 1 }}
@@ -201,7 +201,7 @@ export default function HeroSection() {
               &rarr;
             </motion.span>
           </Link>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       <motion.div

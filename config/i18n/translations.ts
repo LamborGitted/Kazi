@@ -14,14 +14,14 @@ const en: Translations = {
   },
   hero: {
     subtitle: "Endless Curiosity, Boundless Creation",
-    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "Minecraft Player"],
+    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACGN Lover"],
     explore: "Explore My Cards",
   },
   about: {
     sectionTitle: "About",
     whoAmI: "Who am I",
     tagline: "Endless Curiosity, Boundless Creation",
-    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "Minecraft Player"],
+    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACGN Lover"],
     bio: "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, Minecraft, and creative coding. Always chasing the next challenge — whether it's shipping a side project at 3am or hitting a new personal best on osu! Mania.",
     philosophy:
       "I believe the best way to learn is to build. Every project is a chance to experiment, break things, and discover something unexpected. Code is just another form of creative expression.",
@@ -32,6 +32,7 @@ const en: Translations = {
       "osu! Mania Player",
       "Creative Coder",
       "Night Owl",
+      "ACGN Lover",
     ],
     interests: [
       { label: "Rhythm Games", emoji: "🎵" },
@@ -42,16 +43,11 @@ const en: Translations = {
       { label: "Late Night Coding", emoji: "🌙" },
     ],
     currently: [
-      "Building personal projects",
+      "Building personal homepage with React & Next.js",
       "Playing osu! Mania",
-      "Exploring new frameworks",
+      "Exploring agents and AI tools",
     ],
     timeline: [
-      {
-        year: "2007-6",
-        title: "Born",
-        description: "A new journey began",
-      },
       {
         year: "2019",
         title: "First Steps in Programming",
@@ -61,6 +57,11 @@ const en: Translations = {
         year: "2022-4",
         title: "The Charm of Rhythm",
         description: "Got hooked on osu!, especially Mania mode — chasing higher scores and faster reflexes",
+      },
+      {
+        year: "2022-2024",
+        title: "Intensifying High School Life",
+        description: "Had to temporarily set aside my passions, but still held onto my own brilliant dreams",
       },
       {
         year: "2025-6",
@@ -84,7 +85,7 @@ const en: Translations = {
       },
       {
         year: "2026-3",
-        title: "React & Next.js",
+        title: "Learn React & Next.js",
         description: "Started learning React and Next.js to build more complex, high-performance applications — quickly fell in love with component architecture and server-side rendering",
       },
       {
@@ -197,14 +198,14 @@ const zh: Translations = {
   },
   hero: {
     subtitle: "认知无限，创造无穷",
-    lines: ["开发者", "创作者", "Osu! Mania 玩家"],
+    lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "ACG 爱好者"],
     explore: "探索我的卡片",
   },
   about: {
-    sectionTitle: "关于",
+    sectionTitle: "About",
     whoAmI: "我是谁",
     tagline: "认知无限，创造无穷",
-    lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "Minecraft 玩家"],
+    lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "ACG 爱好者"],
     bio: "一个热爱构建和探索新技术的开发者。热衷于开源、音游、Minecraft 和创意编程。始终在追寻下一个挑战——无论是凌晨三点上线一个副业项目，还是在 osu! Mania 上刷新个人最佳。",
     philosophy:
       "我相信最好的学习方式就是动手尝试。每个项目都是一次实验、打破常规、发现意外的机会。代码只是创意表达的另一种形式。",
@@ -215,22 +216,18 @@ const zh: Translations = {
       "osu! Mania 玩家",
       "创意编程者",
       "夜猫子",
+      "ACG 爱好者",
     ],
     interests: [
-      { label: "音游", emoji: "🎵" },
-      { label: "开源", emoji: "🔓" },
-      { label: "UI 设计", emoji: "🎨" },
-      { label: "音乐", emoji: "🎧" },
-      { label: "动漫", emoji: "✨" },
-      { label: "深夜编码", emoji: "🌙" },
+      { label: "音游", emoji: "" },
+      { label: "开源", emoji: "" },
+      { label: "UI 设计", emoji: "" },
+      { label: "音乐", emoji: "" },
+      { label: "动漫", emoji: "" },
+      { label: "深夜编码", emoji: "" },
     ],
-    currently: ["构建个人项目", "玩 osu! Mania", "探索新框架"],
+    currently: ["用 React & Next.js 构建个人主页", "玩 osu! Mania", "探索 agents 和 AI 工具"],
     timeline: [
-      {
-        year: "2007-6",
-        title: "诞生",
-        description: "开启了一个新的旅程",
-      },
       {
         year: "2019",
         title: "初入编程世界",
@@ -239,7 +236,12 @@ const zh: Translations = {
       {
         year: "2022-4",
         title: "音符跳动的魅力",
-        description: "迷上了 osu!，尤其是 Mania 模式，开始追求更高的分数和更快的反应",
+        description: "音乐游戏，尤其是osu!Mania 模式，开始追求更高的分数和更快的反应",
+      },
+      {
+        year: "2022-2024",
+        title: "日益紧张的高中生活",
+        description: "暂时得放下热爱，但仍坚持着属于自己的璀璨的梦想",
       },
       {
         year: "2025-6",
@@ -263,7 +265,7 @@ const zh: Translations = {
       },
       {
         year: "2026-3",
-        title: "React和Next.js",
+        title: "学习React和Next.js",
         description: "为了构建更复杂和高性能的应用，开始学习React和Next.js，并迅速爱上了它们的组件化和服务端渲染特性",
       },
       {
@@ -279,7 +281,7 @@ const zh: Translations = {
       techStack: "技术栈",
       interests: "兴趣",
       journey: "旅程",
-      thingsToLearn: "待学之事",
+      thingsToLearn: "旅途进行中",
       getInTouch: "联系我",
       activeNow: "在线中",
     },
@@ -288,7 +290,7 @@ const zh: Translations = {
   },
   blog: {
     sectionTitle: "博客",
-    heading: "想法",
+    heading: "Thoughts",
     description: "关于代码、设计和生活的想法、学习与探索。",
     searchPlaceholder: "搜索文章...",
     filteredBy: "筛选：",
@@ -304,7 +306,7 @@ const zh: Translations = {
     copyLink: "复制链接",
   },
   contact: {
-    heading: "联系",
+    heading: "Contact",
     subtitle: "取得联系",
     description: "有问题或想合作？给我留言吧。",
     name: "姓名",
@@ -319,26 +321,26 @@ const zh: Translations = {
     error: "出了点问题，请重试。",
   },
   social: {
-    heading: "社交",
+    heading: "Social Card",
     subtitle: "连接",
     description: "我分享、创作和与世界连接的地方",
   },
   projects: {
-    heading: "项目",
+    heading: "PROJECTS",
     subtitle: "我的作品",
     description:
-      "我构建的作品集合——从开源工具到 Minecraft 模组。",
+      "我制作的作品集合——从开源工具到 Minecraft 模组。",
     filterAll: "全部",
     filterOpensource: "开源",
     filterMinecraft: "我的世界",
     viewProject: "查看项目",
     categories: {
       opensource: "开源",
-      minecraft: "我的世界",
+      minecraft: "我的世界Mod",
     },
   },
   music: {
-    heading: "音乐",
+    heading: "Music",
     subtitle: "聆听",
     description:
       "原创编曲与电子作品。下载并享受。",
@@ -348,13 +350,13 @@ const zh: Translations = {
   footer: {
     about: "关于",
     aboutDescription:
-      "互联网上的个人角落。构建项目，玩音游，探索 Web。",
-    online: "在线",
+      "互联网上的神秘角落。",
+    online: "online",
     navigation: "导航",
     home: "首页",
     connect: "社交",
     backToTop: "回到顶部",
-    designedWith: "用心设计",
+    designedWith: "热爱生活与技术",
   },
   base: {
     title: "Lantxx 个人主页",

@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Switcher from "@/components/Switcher";
 import ThemeProvider from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
-import { title , description } from "@/config/base.data";
+
 
 
 const geistSans = Geist({
@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: title,
-  description: description,
+  title: "Lantxx Personal Homepage",
+  description: "Endless Curiosity, Boundless Creation",
 };
 
 export default function RootLayout({

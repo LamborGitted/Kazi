@@ -4,7 +4,10 @@ const heroLines = ["Developer", "Creator", "osu! Mania Player", "Creative Coder"
 const briefIntro =
   "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, Minecraft, and creative coding.";
 const socialLinks = [
-  { label: "GitHub", href: "https://github.com/LamborGitted", icon: "github" },
+  { 
+    label: "GitHub", 
+    href: "https://github.com/LamborGitted", 
+    icon: "github" },
   {
     label: "Bilibili",
     href: "https://space.bilibili.com/1517690573",

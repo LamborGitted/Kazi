@@ -7,7 +7,7 @@ export default function Home() {
     <div className="relative">
       <HeroSection />
       <AboutSection />
-      <SocialPreview />
+      {/* <SocialPreview /> */}
     </div>
   );
 }
