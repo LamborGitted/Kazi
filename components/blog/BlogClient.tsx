@@ -21,7 +21,7 @@ export default function BlogClient({ posts, postsZh, tags, tagsZh }: BlogClientP
   const lineRef = useRef(null);
   const lineInView = useInView(lineRef, { once: true, margin: "-50px" });
   const { t, locale } = useLanguage();
-  const blog = t.blog as Record<string, string>;
+  const blog = t.blog;
 
   const currentPosts = locale === "zh" ? postsZh : posts;
   const currentTags = locale === "zh" ? tagsZh : tags;

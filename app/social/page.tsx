@@ -195,7 +195,7 @@ function SocialSection({
 
 export default function SocialPage() {
   const { t } = useLanguage();
-  const social = t.social as Record<string, string>;
+  const social = t.social;
 
   return (
     <main className="flex flex-col min-h-screen relative">

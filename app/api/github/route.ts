@@ -1,19 +1,6 @@
 import { NextResponse } from "next/server";
 import { withCache } from "@/utils/server-cache";
-
-interface GitHubUser {
-  avatar_url: string;
-  name: string;
-  bio: string;
-  login: string;
-}
-
-interface GitHubRepo {
-  id: number;
-  name: string;
-  stargazers_count: number;
-  html_url: string;
-}
+import { GitHubUserSchema, GitHubRepoSchema } from "@/config/schemas";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -27,34 +14,44 @@ export async function GET(request: Request) {
 
   try {
     const [user, repos] = await Promise.all([
-      withCache<GitHubUser | null>(`github:user:${username}`, async () => {
+      withCache(`github:user:${username}`, async () => {
         const res = await fetch(`https://api.github.com/users/${username}`, {
           headers: { "User-Agent": "Lantxx-Homepage" },
         });
         if (!res.ok) return null;
         const data = await res.json();
-        return {
+        return GitHubUserSchema.safeParse({
           avatar_url: data.avatar_url || "",
           name: data.name || "",
           bio: data.bio || "",
           login: data.login || "",
-        };
+        }).success
+          ? GitHubUserSchema.parse({
+              avatar_url: data.avatar_url || "",
+              name: data.name || "",
+              bio: data.bio || "",
+              login: data.login || "",
+            })
+          : null;
       }),
-      withCache<GitHubRepo[]>(`github:repos:${username}`, async () => {
+      withCache(`github:repos:${username}`, async () => {
         const res = await fetch(
           `https://api.github.com/search/repositories?q=user:${username}&sort=stars&order=desc&per_page=6`,
           { headers: { "User-Agent": "Lantxx-Homepage" } }
         );
         if (!res.ok) return [];
         const data = await res.json();
-        return (data.items || []).map(
-          (r: { id: number; name: string; stargazers_count: number; html_url: string }) => ({
-            id: r.id,
-            name: r.name,
-            stargazers_count: r.stargazers_count,
-            html_url: r.html_url,
-          })
-        );
+        return (data.items || [])
+          .map((r: Record<string, unknown>) =>
+            GitHubRepoSchema.safeParse({
+              id: r.id,
+              name: r.name,
+              stargazers_count: r.stargazers_count,
+              html_url: r.html_url,
+            })
+          )
+          .filter((r: { success: boolean }) => r.success)
+          .map((r: { data: unknown }) => r.data);
       }),
     ]);
 

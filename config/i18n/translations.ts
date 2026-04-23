@@ -1,16 +1,15 @@
 import { defaultLocale, type Locale } from "./locales";
-
-type TranslationValue = string | readonly string[] | readonly unknown[] | { readonly [key: string]: TranslationValue };
-type Translations = { readonly [key: string]: TranslationValue };
+import type { Translations } from "./types";
 
 const en: Translations = {
   nav: {
-    about: "About",
-    blog: "Blog",
-    social: "Social",
-    projects: "Projects",
-    contact: "Contact",
-    music: "Music",
+    home: "HOME",
+    about: "ABOUT",
+    blog: "BLOG",
+    social: "SOCIAL",
+    projects: "PROJECTS",
+    contact: "CONTACT",
+    music: "MUSIC",
   },
   hero: {
     subtitle: "Endless Curiosity, Boundless Creation",
@@ -189,12 +188,13 @@ const en: Translations = {
 
 const zh: Translations = {
   nav: {
-    about: "关于",
-    blog: "博客",
-    social: "社交",
-    projects: "项目",
-    contact: "联系",
-    music: "音乐",
+    home: "HOME",
+    about: "ABOUT",
+    blog: "BLOG",
+    social: "SOCIAL",
+    projects: "PROJECTS",
+    contact: "CONTACT",
+    music: "MUSIC",
   },
   hero: {
     subtitle: "认知无限，创造无穷",
@@ -364,14 +364,11 @@ const zh: Translations = {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _dictionaries: { en: Translations; zh: Translations } = { en, zh };
-
 function getDict(locale: Locale) {
   return locale === "zh" ? zh : en;
 }
 
-export function t(locale: Locale, path: string): TranslationValue {
+export function t(locale: Locale, path: string): unknown {
   const keys = path.split(".");
   let current: Record<string, unknown> = getDict(locale) as unknown as Record<string, unknown>;
   for (const key of keys) {
@@ -387,14 +384,14 @@ export function t(locale: Locale, path: string): TranslationValue {
           return path;
         }
       }
-      return fb as TranslationValue;
+      return fb;
     }
   }
-  return current as TranslationValue;
+  return current;
 }
 
 export function getTranslations(locale: Locale): Translations {
   return getDict(locale);
 }
 
-export type { Translations, TranslationValue };
+export type { Translations };

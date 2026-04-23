@@ -2,12 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-
-interface Heading {
-  id: string;
-  text: string;
-  level: number;
-}
+import type { Heading } from "@/components/blog/types";
 
 interface TableOfContentsProps {
   headings: Heading[];

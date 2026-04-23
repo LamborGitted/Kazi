@@ -192,53 +192,6 @@ function TypingLine({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-function TimelineSection({ timeline }: { timeline: { year: string; title: string; description: string }[] }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <div ref={ref} className="space-y-6">
-      {timeline.map((item, i) => (
-        <motion.div
-          key={item.year}
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{
-            delay: 0.2 + i * 0.15,
-            duration: 0.5,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }}
-          className="flex gap-4 items-start"
-        >
-          <div className="flex flex-col items-center">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={isInView ? { scale: 1 } : {}}
-              transition={{ delay: 0.3 + i * 0.15, type: "spring", stiffness: 300, damping: 20 }}
-              className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5"
-            />
-            {i < timeline.length - 1 && (
-              <motion.div
-                initial={{ height: 0 }}
-                animate={isInView ? { height: "2rem" } : {}}
-                transition={{ delay: 0.5 + i * 0.15, duration: 0.4 }}
-                className="w-px bg-border"
-              />
-            )}
-          </div>
-          <div>
-            <span className="text-xs font-mono text-accent tracking-wider">
-              {item.year}
-            </span>
-            <p className="text-sm font-medium mt-0.5">{item.title}</p>
-            <p className="text-xs text-foreground/45 mt-0.5">{item.description}</p>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
 function EnhancedTimeline({ timeline }: { timeline: { year: string; title: string; description: string }[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
@@ -473,12 +426,12 @@ function InterestGrid({ items }: { items: { label: string; emoji: string }[] }) 
 
 export default function AboutPage() {
   const { t } = useLanguage();
-  const about = t.about as Record<string, unknown>;
-  const cards = about.cards as Record<string, string>;
-  const translatedTimeline = about.timeline as { year: string; title: string; description: string }[];
-  const translatedInterests = about.interests as { label: string; emoji: string }[];
-  const translatedCurrently = about.currently as string[];
-  const translatedRoles = about.roles as string[];
+  const about = t.about;
+  const cards = about.cards;
+  const translatedTimeline = about.timeline;
+  const translatedInterests = about.interests;
+  const translatedCurrently = about.currently;
+  const translatedRoles = about.roles;
 
   return (
     <div className="relative">
@@ -500,7 +453,7 @@ export default function AboutPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono text-accent tracking-widest uppercase"
           >
-            {(about as Record<string, string>).whoAmI}
+            {about.whoAmI}
           </motion.span>
 
           <h1 className="mt-6 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none overflow-hidden [perspective:600px]">
@@ -537,7 +490,7 @@ export default function AboutPage() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="mt-6 text-base sm:text-lg font-light text-foreground/50 max-w-md mx-auto font-mono"
           >
-            {(about as Record<string, string>).tagline}
+            {about.tagline}
           </motion.p>
         </motion.div>
       </section>
@@ -557,7 +510,7 @@ export default function AboutPage() {
                 {cards.bio}
               </span>
               <div className="mt-4">
-                <WordReveal text={(about as Record<string, string>).bio as string} delay={0.3} />
+                <WordReveal text={about.bio} delay={0.3} />
               </div>
               <motion.div
                 className="mt-6 h-px w-16 bg-border relative overflow-hidden"
@@ -601,7 +554,7 @@ export default function AboutPage() {
               </span>
               <div className="mt-4">
                 <p className="text-sm italic text-foreground/60 leading-relaxed">
-                  &ldquo;{(about as Record<string, string>).philosophy}&rdquo;
+                  &ldquo;{about.philosophy}&rdquo;
                 </p>
               </div>
             </BentoCard>

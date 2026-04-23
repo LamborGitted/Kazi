@@ -106,7 +106,7 @@ export default function ContactPage() {
     message: "",
   });
   const { t } = useLanguage();
-  const contact = t.contact as Record<string, string>;
+  const contact = t.contact;
 
   const formRef = useRef(null);
   const formInView = useInView(formRef, { once: true, margin: "-60px" });

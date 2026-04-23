@@ -4,22 +4,7 @@ import { useEffect, useState } from "react";
 import { bilibili_config } from "@/config/social.data";
 import Image from "next/image";
 import SocialCard from "@/components/SocialComponent/SocialCard";
-
-interface BilibiliUser {
-  name: string;
-  avatar: string;
-  sign: string;
-  mid: string;
-  fans: number;
-  likes: number;
-}
-
-interface BilibiliVideo {
-  bvid: string;
-  title: string;
-  play: number;
-  pic: string;
-}
+import type { BilibiliUser, BilibiliVideo } from "@/config/schemas";
 
 function fmt(n: number): string {
   if (n >= 10000) return `${(n / 10000).toFixed(1)}万`;

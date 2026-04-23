@@ -3,22 +3,8 @@
 import { useEffect, useState } from "react";
 import { github_config } from "@/config/social.data";
 import Image from "next/image";
-import { useSocialCard } from "@/components/SocialComponent/SocialCard";
 import SocialCard from "@/components/SocialComponent/SocialCard";
-
-interface GitHubUser {
-  avatar_url: string;
-  name: string;
-  bio: string;
-  login: string;
-}
-
-interface GitHubRepo {
-  id: number;
-  name: string;
-  stargazers_count: number;
-  html_url: string;
-}
+import type { GitHubUser, GitHubRepo } from "@/config/schemas";
 
 export default function GithubCard() {
   const [user, setUser] = useState<GitHubUser | null>(null);

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { appName, navLinks } from "@/config/header.data";
+import { useTheme } from "next-themes";
+import { navLinks } from "@/config/header.data";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -16,17 +17,32 @@ const underlineVariants = {
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { t } = useLanguage();
+  const { resolvedTheme } = useTheme();
+  const lastScrollY = useRef(0);
+
+  useEffect(() => setMounted(true), []);
 
   const translatedNavLinks = navLinks.map((link) => ({
     ...link,
-    label: (t.nav as Record<string, string>)[link.id] || link.label,
+    label: t.nav[link.id as keyof typeof t.nav] || link.label,
   }));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 20);
+      if (currentY > lastScrollY.current && currentY > 56) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = currentY;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -42,14 +58,16 @@ export default function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full"
-      style={{ backdropFilter: scrolled ? "blur(20px) saturate(1.4)" : "none" }}
+      className="sticky top-0 z-50 w-full transition-transform duration-300 ease-in-out"
+      style={{
+        backdropFilter: scrolled ? "blur(20px) saturate(1.4)" : "none",
+        transform: hidden ? "translateY(-100%)" : "translateY(0)",
+      }}
     >
       <div
         className="absolute inset-0 transition-opacity duration-500"
         style={{
-          opacity: scrolled ? 1 : 0,
-          background: "var(--background)",
+          background: mounted && resolvedTheme === "dark" ? "#1a1a1a" : "#000000",
         }}
       />
       <div
@@ -62,7 +80,7 @@ export default function Header() {
       />
 
       <div className="relative w-full max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-        <Link href="/" className="group flex items-center gap-1.5 relative">
+        {/* <Link href="/" className="group flex items-center gap-1.5 relative">
           <span
             className="text-lg font-bold tracking-tight"
             style={{ fontFamily: "var(--font-geist-mono)" }}
@@ -77,9 +95,9 @@ export default function Header() {
               transition: "opacity 0.3s",
             }}
           />
-        </Link>
+        </Link> */}
 
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1 ml-auto">
           {translatedNavLinks.map((link) => (
             <Link
               key={link.id}

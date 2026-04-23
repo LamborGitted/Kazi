@@ -6,6 +6,7 @@ import Link from "next/link";
 import MarkdownRenderer from "@/components/blog/MarkdownRenderer";
 import TableOfContents from "@/components/blog/TableOfContents";
 import { useLanguage } from "@/components/LanguageProvider";
+import type { BlogPostMeta, Heading } from "@/components/blog/types";
 
 interface PostData {
   slug: string;
@@ -14,29 +15,15 @@ interface PostData {
   excerpt: string;
   tags: string[];
   htmlContent: string;
-  headings: { id: string; text: string; level: number }[];
+  headings: Heading[];
   readingTime: number;
 }
 
 interface PostClientProps {
   post: PostData;
   postZh: PostData;
-  recentPosts: {
-    slug: string;
-    title: string;
-    date: string;
-    excerpt: string;
-    tags: string[];
-    readingTime: number;
-  }[];
-  recentPostsZh: {
-    slug: string;
-    title: string;
-    date: string;
-    excerpt: string;
-    tags: string[];
-    readingTime: number;
-  }[];
+  recentPosts: BlogPostMeta[];
+  recentPostsZh: BlogPostMeta[];
 }
 
 export default function PostClient({ post, postZh, recentPosts, recentPostsZh }: PostClientProps) {
@@ -45,7 +32,7 @@ export default function PostClient({ post, postZh, recentPosts, recentPostsZh }:
   const lineRef = useRef(null);
   const lineInView = useInView(lineRef, { once: true, margin: "-20px" });
   const { t, locale } = useLanguage();
-  const blog = t.blog as Record<string, string>;
+  const blog = t.blog;
 
   const currentPost = locale === "zh" && postZh ? postZh : post;
   const currentRecent = locale === "zh" ? recentPostsZh : recentPosts;
@@ -63,7 +50,7 @@ export default function PostClient({ post, postZh, recentPosts, recentPostsZh }:
     <div className="relative w-full min-h-screen">
       <div className="absolute inset-0 pointer-events-none">
         <div
-          className="absolute top-0 right-0 w-[600px] h-[300px] rounded-full blur-3xl"
+          className="absolute top-0 right-0 w-150 h-75 rounded-full blur-3xl"
           style={{
             background: "var(--accent-glow)",
             opacity: 0.25,

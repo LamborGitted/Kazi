@@ -21,6 +21,8 @@ interface NavLink {
 export const appName="Lantxx Homepage";
 
 export const navLinks : NavLink[] = [
+  { id: "home", label: "Home", href: "/" },
+
   { id: "about", label: "About", href: "/about" },
 
   { id: "blog", label: "Blog", href: "/blog" },

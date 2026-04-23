@@ -9,33 +9,8 @@ import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import rehypeStringify from "rehype-stringify";
 import type { Locale } from "@/config/i18n/locales";
-
-export interface BlogPost {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  tags: string[];
-  content: string;
-  htmlContent: string;
-  headings: Heading[];
-  readingTime: number;
-}
-
-export interface BlogPostMeta {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  tags: string[];
-  readingTime: number;
-}
-
-export interface Heading {
-  id: string;
-  text: string;
-  level: number;
-}
+import type { BlogPost, BlogPostMeta, Heading } from "@/components/blog/types";
+import { PostFrontmatterSchema } from "@/config/schemas";
 
 const postsDirectory = path.join(process.cwd(), "content", "posts");
 
@@ -107,6 +82,13 @@ export async function getPostBySlug(
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
 
+  const parsed = PostFrontmatterSchema.parse({
+    title: data.title || "",
+    date: data.date || new Date().toISOString(),
+    excerpt: data.excerpt || "",
+    tags: data.tags || [],
+  });
+
   const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -121,10 +103,10 @@ export async function getPostBySlug(
 
   return {
     slug,
-    title: data.title || slug,
-    date: data.date || new Date().toISOString(),
-    excerpt: data.excerpt || "",
-    tags: data.tags || [],
+    title: parsed.title || slug,
+    date: parsed.date,
+    excerpt: parsed.excerpt,
+    tags: parsed.tags,
     content,
     htmlContent,
     headings,

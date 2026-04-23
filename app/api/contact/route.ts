@@ -1,24 +1,20 @@
 import { NextResponse } from "next/server";
+import { ContactFormSchema } from "@/config/schemas";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const result = ContactFormSchema.safeParse(body);
 
-    if (!name || !email || !subject || !message) {
+    if (!result.success) {
+      const firstError = result.error.issues[0];
       return NextResponse.json(
-        { error: "All fields are required" },
+        { error: firstError?.message || "Validation failed" },
         { status: 400 }
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email address" },
-        { status: 400 }
-      );
-    }
+    const { name, email, subject, message } = result.data;
 
     console.log("[contact]", { name, email, subject, message });
 

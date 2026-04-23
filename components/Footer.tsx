@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { appName } from "@/config/header.data";
 import { socialLinks } from "@/config/home.data";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -41,20 +40,20 @@ function SocialIcon({ icon }: { icon: string }) {
 export default function Footer() {
   const year = new Date().getFullYear();
   const { t } = useLanguage();
-  const footer = t.footer as Record<string, string>;
+  const footer = t.footer;
 
   return (
     <footer className="relative w-full mt-auto">
-      <div className="h-px w-full"
+      {/* <div className="h-px w-full"
         style={{
           background: "linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%)",
           opacity: 0.3,
         }}
-      />
+      /> */}
 
       <div className="relative w-full max-w-5xl mx-auto px-6 pt-16 pb-8">
         <div className="relative flex flex-col items-center mb-16">
-          <motion.span
+          {/* <motion.span
             className="text-[8rem] sm:text-[10rem] md:text-[14rem] font-bold leading-none tracking-tighter select-none"
             style={{
               fontFamily: "var(--font-geist-sans)",
@@ -68,34 +67,17 @@ export default function Footer() {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             Lantxx
-          </motion.span>
+          </motion.span> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 mb-12">
           <div className="flex flex-col gap-3">
-            <span
-              className="text-xs uppercase tracking-[0.2em] text-accent font-medium"
-              style={{ fontFamily: "var(--font-geist-mono)" }}
-            >
-              {footer.about}
-            </span>
             <p
               className="text-sm leading-relaxed max-w-xs"
               style={{ color: "var(--muted)" }}
             >
               {footer.aboutDescription}
             </p>
-            <div className="flex items-center gap-2 mt-2">
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-glow"
-              />
-              <span
-                className="text-xs tracking-wider uppercase"
-                style={{ color: "var(--muted)", fontFamily: "var(--font-geist-mono)" }}
-              >
-                {footer.online}
-              </span>
-            </div>
           </div>
 
           <div className="flex flex-col gap-3">
@@ -109,10 +91,10 @@ export default function Footer() {
               {[
                 { label: footer.home, href: "/" },
                 { label: footer.about, href: "/about" },
-                { label: (t.nav as Record<string, string>).projects, href: "/projects" },
-                { label: (t.nav as Record<string, string>).blog, href: "/blog" },
-                { label: (t.nav as Record<string, string>).social, href: "/social" },
-                { label: (t.nav as Record<string, string>).contact, href: "/contact" },
+                { label: t.nav.projects, href: "/projects" },
+                { label: t.nav.blog, href: "/blog" },
+                { label: t.nav.social, href: "/social" },
+                { label: t.nav.contact, href: "/contact" },
               ].map((item) => (
                 <Link
                   key={item.href}
@@ -149,7 +131,7 @@ export default function Footer() {
               {footer.connect}
             </span>
             <div className="flex flex-wrap gap-2">
-              {socialLinks.map((link, i) => (
+              {socialLinks.map((link) => (
                 <motion.a
                   key={link.icon}
                   href={link.href}
@@ -173,10 +155,6 @@ export default function Footer() {
                     (e.currentTarget as HTMLElement).style.color = "var(--muted)";
                     (e.currentTarget as HTMLElement).style.background = "transparent";
                   }}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05, duration: 0.4 }}
                   aria-label={link.label}
                 >
                   <SocialIcon icon={link.icon} />

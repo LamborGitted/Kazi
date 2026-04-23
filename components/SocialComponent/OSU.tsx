@@ -4,23 +4,7 @@ import { useEffect, useState } from "react";
 import { osu_config } from "@/config/social.data";
 import Image from "next/image";
 import SocialCard from "@/components/SocialComponent/SocialCard";
-
-interface OsuUser {
-  username: string;
-  avatar_url: string;
-  global_rank: number | null;
-  pp: number;
-  country_code: string;
-}
-
-interface OsuScore {
-  id: number;
-  title: string;
-  difficulty: string;
-  rank: string;
-  accuracy: number;
-  url: string;
-}
+import type { OsuUser, OsuScore } from "@/config/schemas";
 
 function fmtRank(r: number | null): string {
   if (!r) return "#---";

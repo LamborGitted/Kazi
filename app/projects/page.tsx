@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { projects, categories, type Category, type Project } from "@/config/projects.data";
 import { useLanguage } from "@/components/LanguageProvider";
+import type { ProjectCategoriesTranslations } from "@/config/i18n/types";
 
 const charVariants = {
   hidden: { opacity: 0, y: 60, rotateX: -90 },
@@ -206,7 +207,7 @@ function CategoryFilter({
   );
 }
 
-function StatsBar({ filtered, labels }: { filtered: Project[]; labels: Record<string, string> }) {
+function StatsBar({ filtered, labels }: { filtered: Project[]; labels: ProjectCategoriesTranslations }) {
   const counts: Record<string, number> = {};
   for (const p of filtered) {
     counts[p.category] = (counts[p.category] || 0) + 1;
@@ -224,7 +225,7 @@ function StatsBar({ filtered, labels }: { filtered: Project[]; labels: Record<st
             className="w-1.5 h-1.5 rounded-full"
             style={{ background: categoryAccentColors[cat] }}
           />
-          {labels[cat]} {count}
+          {labels[cat as keyof ProjectCategoriesTranslations]} {count}
         </span>
       ))}
     </div>
@@ -234,8 +235,8 @@ function StatsBar({ filtered, labels }: { filtered: Project[]; labels: Record<st
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const { t } = useLanguage();
-  const projectsT = t.projects as Record<string, unknown>;
-  const categoryLabels = projectsT.categories as Record<string, string>;
+  const projectsT = t.projects;
+  const categoryLabels = projectsT.categories;
 
   const filtered =
     activeCategory === "all"
@@ -262,11 +263,11 @@ export default function ProjectsPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono text-accent tracking-widest uppercase"
           >
-            {projectsT.subtitle as string}
+            {projectsT.subtitle}
           </motion.span>
 
           <h1 className="mt-6 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none overflow-hidden [perspective:600px]">
-            {(projectsT.heading as string).split("").map((char, i) => (
+            {(projectsT.heading).split("").map((char, i) => (
               <motion.span
                 key={i}
                 custom={i}
@@ -299,7 +300,7 @@ export default function ProjectsPage() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="mt-6 text-base sm:text-lg font-light text-foreground/50 max-w-lg mx-auto"
           >
-            {projectsT.description as string}
+            {projectsT.description}
           </motion.p>
         </motion.div>
       </section>
@@ -311,7 +312,7 @@ export default function ProjectsPage() {
               active={activeCategory}
               onChange={setActiveCategory}
               labels={{
-                all: projectsT.filterAll as string,
+                all: projectsT.filterAll,
                 opensource: categoryLabels.opensource,
                 minecraft: categoryLabels.minecraft,
               }}

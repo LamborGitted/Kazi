@@ -17,7 +17,7 @@ export default function Switcher({
         <main className="min-h-full flex flex-col bg-[var(--background)]">
         <AnimatePresence mode="wait"
         >
-            <motion.div className="min-h-screen flex flex-col"
+            <motion.div className="min-h-screen flex flex-col shadow-2xl "
                 key={pathname}
                 style={{ transformOrigin: "50vw 100vh" }}
                 initial={{
