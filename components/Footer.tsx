@@ -103,8 +103,8 @@ export default function Footer() {
             </span>
             <nav className="flex flex-col gap-1.5">
               {[
-                { label: footer.home, href: "/" },
-                { label: footer.about, href: "/about" },
+                { label: t.nav.home, href: "/" },
+                { label: t.nav.about, href: "/about" },
                 { label: t.nav.projects, href: "/projects" },
                 { label: t.nav.blog, href: "/blog" },
                 { label: t.nav.social, href: "/social" },
