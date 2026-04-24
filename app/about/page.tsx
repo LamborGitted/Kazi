@@ -192,7 +192,7 @@ function TypingLine({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-function EnhancedTimeline({ timeline }: { timeline: { year: string; title: string; description: string }[] }) {
+function EnhancedTimeline({ timeline, subtitle, heading, description }: { timeline: { year: string; title: string; description: string }[]; subtitle: string; heading: string; description: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
@@ -216,7 +216,7 @@ function EnhancedTimeline({ timeline }: { timeline: { year: string; title: strin
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono text-accent tracking-widest uppercase"
           >
-            Journey
+            {subtitle}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -224,7 +224,7 @@ function EnhancedTimeline({ timeline }: { timeline: { year: string; title: strin
             transition={{ delay: 0.3, duration: 0.6 }}
             className="mt-4 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter"
           >
-            Timeline
+            {heading}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -232,7 +232,7 @@ function EnhancedTimeline({ timeline }: { timeline: { year: string; title: strin
             transition={{ delay: 0.4, duration: 0.6 }}
             className="mt-6 text-base sm:text-lg text-foreground/50 max-w-2xl mx-auto leading-relaxed"
           >
-            Every milestone marks a step forward. From first lines of code to building real applications — this is the path that shaped who I am today.
+            {description}
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -372,26 +372,70 @@ function EnhancedTimeline({ timeline }: { timeline: { year: string; title: strin
   );
 }
 
-function Marquee({ roles }: { roles: string[] }) {
-  const items = [...roles, ...roles];
+function Marquee({ roles, reverse = false }: { roles: string[]; reverse?: boolean }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    let targetRate = 1;
+    let currentRate = 1;
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let rafId: number;
+
+    const onScroll = () => {
+      targetRate = 3.5;
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        targetRate = 1;
+      }, 200);
+    };
+
+    const tick = () => {
+      if (currentRate !== targetRate) {
+        currentRate += (targetRate - currentRate) * 0.12;
+        if (Math.abs(currentRate - targetRate) < 0.01) currentRate = targetRate;
+        el.getAnimations().forEach((a) => {
+          a.playbackRate = currentRate;
+        });
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+
+    window.addEventListener("wheel", onScroll, { passive: true });
+    window.addEventListener("touchmove", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", onScroll);
+      window.removeEventListener("touchmove", onScroll);
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <div className="w-full overflow-hidden py-8 border-y border-border">
-      <motion.div
-        className="flex gap-8 whitespace-nowrap"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      <div
+        ref={trackRef}
+        className={`flex w-max whitespace-nowrap will-change-transform ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
       >
-        {items.map((role, i) => (
-          <span
-            key={i}
-            className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground/[0.06] select-none flex items-center gap-8"
-          >
-            {role}
-            <span className="text-accent/20 text-lg">/</span>
-          </span>
+        {[0, 1].map((group) => (
+          <div key={group} className="flex shrink-0 items-center gap-8 pr-8">
+            {roles.map((role) => (
+              <span
+                key={`${group}-${role}`}
+                className="flex shrink-0 items-center gap-8 text-2xl font-bold tracking-tight text-foreground/[0.15] select-none sm:text-3xl"
+              >
+                {role}
+                <span className="text-lg text-accent/20">/</span>
+              </span>
+            ))}
+          </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -497,7 +541,12 @@ export default function AboutPage() {
 
       <Marquee roles={translatedRoles} />
 
-      <EnhancedTimeline timeline={translatedTimeline} />
+      <EnhancedTimeline
+        timeline={translatedTimeline}
+        subtitle={about.timelineSubtitle}
+        heading={about.timelineHeading}
+        description={about.timelineDescription}
+      />
 
       <section className="relative w-full py-16 sm:py-24 px-6">
         <div className="max-w-5xl mx-auto">
@@ -615,23 +664,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="w-full overflow-hidden py-8 border-y border-border">
-        <motion.div
-          className="flex gap-8 whitespace-nowrap"
-          animate={{ x: ["-50%", "0%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          {[...translatedRoles, ...translatedRoles].map((role, i) => (
-            <span
-              key={i}
-              className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground/[0.06] select-none flex items-center gap-8"
-            >
-              {role}
-              <span className="text-accent/20 text-lg">/</span>
-            </span>
-          ))}
-        </motion.div>
-      </div>
+      <Marquee roles={translatedRoles} reverse />
 
       <div className="h-20" />
     </div>

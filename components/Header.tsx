@@ -56,6 +56,12 @@ export default function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  const chromeBackground = mounted && resolvedTheme === "dark" ? "#1a1a1a" : "#000000";
+  const chromeMuted = mounted && resolvedTheme === "dark"
+    ? "var(--muted)"
+    : "rgba(250, 250, 250, 0.68)";
+  const chromeForeground = "rgba(250, 250, 250, 0.96)";
+
   return (
     <header
       className="sticky top-0 z-50 w-full transition-transform duration-300 ease-in-out"
@@ -67,7 +73,7 @@ export default function Header() {
       <div
         className="absolute inset-0 transition-opacity duration-500"
         style={{
-          background: mounted && resolvedTheme === "dark" ? "#1a1a1a" : "#000000",
+          background: chromeBackground,
         }}
       />
       <div
@@ -108,7 +114,7 @@ export default function Header() {
                 color:
                   pathname === link.href
                     ? "var(--accent)"
-                    : "var(--muted)",
+                    : chromeMuted,
               }}
             >
               <motion.div
@@ -129,12 +135,12 @@ export default function Header() {
                 }}
                 onMouseEnter={(e) => {
                   if (pathname !== link.href) {
-                    (e.target as HTMLElement).style.color = "var(--foreground)";
+                    (e.target as HTMLElement).style.color = chromeForeground;
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (pathname !== link.href) {
-                    (e.target as HTMLElement).style.color = "var(--muted)";
+                    (e.target as HTMLElement).style.color = chromeMuted;
                   }
                 }}
               >

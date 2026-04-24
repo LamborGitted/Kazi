@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Switcher from "@/components/Switcher";
 import ThemeProvider from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import SmoothScroll from "@/components/SmoothScroll";
 
 
 
@@ -39,11 +40,13 @@ export default function RootLayout({
 
         <ThemeProvider>
           <LanguageProvider>
-            <Switcher>
-              <Header />
-              {children}
-              <Footer />
-            </Switcher>
+            <SmoothScroll>
+              <Switcher>
+                <Header />
+                {children}
+                <Footer />
+              </Switcher>
+            </SmoothScroll>
           </LanguageProvider>
         </ThemeProvider>
 

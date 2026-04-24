@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { socialLinks } from "@/config/home.data";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -41,9 +43,21 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const { t } = useLanguage();
   const footer = t.footer;
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const chromeBackground = mounted && resolvedTheme === "dark" ? "#1a1a1a" : "#000000";
+  const chromeMuted = mounted && resolvedTheme === "dark"
+    ? "var(--muted)"
+    : "rgba(250, 250, 250, 0.68)";
+  const chromeForeground = "rgba(250, 250, 250, 0.96)";
 
   return (
-    <footer className="relative w-full mt-auto">
+    <footer className="relative w-full mt-auto"
+      style={{ background: chromeBackground }}
+    >
       {/* <div className="h-px w-full"
         style={{
           background: "linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%)",
@@ -51,7 +65,7 @@ export default function Footer() {
         }}
       /> */}
 
-      <div className="relative w-full max-w-5xl mx-auto px-6 pt-16 pb-8">
+      <div className="relative w-full max-w-5xl mx-auto px-6 pt-12 pb-8">
         <div className="relative flex flex-col items-center mb-16">
           {/* <motion.span
             className="text-[8rem] sm:text-[10rem] md:text-[14rem] font-bold leading-none tracking-tighter select-none"
@@ -74,7 +88,7 @@ export default function Footer() {
           <div className="flex flex-col gap-3">
             <p
               className="text-sm leading-relaxed max-w-xs"
-              style={{ color: "var(--muted)" }}
+              style={{ color: chromeMuted }}
             >
               {footer.aboutDescription}
             </p>
@@ -101,14 +115,14 @@ export default function Footer() {
                   href={item.href}
                   className="group flex items-center gap-2 text-sm transition-colors duration-200"
                   style={{
-                    color: "var(--muted)",
+                    color: chromeMuted,
                     fontFamily: "var(--font-geist-mono)",
                   }}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.color = "var(--accent)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.color = "var(--muted)";
+                    (e.currentTarget as HTMLElement).style.color = chromeMuted;
                   }}
                 >
                   <span
@@ -140,7 +154,7 @@ export default function Footer() {
                   className="w-9 h-9 rounded-lg border flex items-center justify-center transition-all duration-300"
                   style={{
                     borderColor: "var(--border)",
-                    color: "var(--muted)",
+                    color: chromeMuted,
                     background: "transparent",
                   }}
                   whileHover={{
@@ -152,7 +166,7 @@ export default function Footer() {
                     (e.currentTarget as HTMLElement).style.background = "var(--accent-glow)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.color = "var(--muted)";
+                    (e.currentTarget as HTMLElement).style.color = chromeMuted;
                     (e.currentTarget as HTMLElement).style.background = "transparent";
                   }}
                   aria-label={link.label}
@@ -176,17 +190,17 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-xs transition-colors duration-200"
                   style={{
-                    color: "var(--muted)",
+                    color: chromeMuted,
                     fontFamily: "var(--font-geist-mono)",
                     opacity: 0.6,
                   }}
                   onMouseEnter={(e) => {
                     (e.target as HTMLElement).style.opacity = "1";
-                    (e.target as HTMLElement).style.color = "var(--foreground)";
+                    (e.target as HTMLElement).style.color = chromeForeground;
                   }}
                   onMouseLeave={(e) => {
                     (e.target as HTMLElement).style.opacity = "0.6";
-                    (e.target as HTMLElement).style.color = "var(--muted)";
+                    (e.target as HTMLElement).style.color = chromeMuted;
                   }}
                 >
                   {tech.name}
@@ -205,7 +219,7 @@ export default function Footer() {
           <span
             className="text-xs tracking-wide"
             style={{
-              color: "var(--muted)",
+              color: chromeMuted,
               fontFamily: "var(--font-geist-mono)",
             }}
           >
@@ -216,14 +230,14 @@ export default function Footer() {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="group flex items-center gap-1.5 text-xs transition-colors duration-200 cursor-pointer"
             style={{
-              color: "var(--muted)",
+              color: chromeMuted,
               fontFamily: "var(--font-geist-mono)",
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.color = "var(--accent)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.color = "var(--muted)";
+              (e.currentTarget as HTMLElement).style.color = chromeMuted;
             }}
           >
             {footer.backToTop}
@@ -243,7 +257,7 @@ export default function Footer() {
           <span
             className="text-xs tracking-wide"
             style={{
-              color: "var(--muted)",
+              color: chromeMuted,
               fontFamily: "var(--font-geist-mono)",
               opacity: 0.5,
             }}

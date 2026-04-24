@@ -50,6 +50,9 @@ export interface AboutTranslations {
   timeline: TimelineItem[];
   cards: AboutCardsTranslations;
   briefIntro: string;
+  timelineSubtitle: string;
+  timelineHeading: string;
+  timelineDescription: string;
 }
 
 export interface BlogTranslations {

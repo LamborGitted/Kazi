@@ -35,15 +35,15 @@ const sections: SocialSectionConfig[] = [
     Component: GithubCard,
     visible: github_config.show,
   },
-  {
-    key: "bilibili",
-    label: "Bilibili",
-    description: "Videos & creative content",
-    accentColor: "251,114,153",
-    accentHex: "#fb7299",
-    Component: BilibiliCard,
-    visible: bilibili_config.show,
-  },
+  // {
+  //   key: "bilibili",
+  //   label: "Bilibili",
+  //   description: "Videos & creative content",
+  //   accentColor: "251,114,153",
+  //   accentHex: "#fb7299",
+  //   Component: BilibiliCard,
+  //   visible: bilibili_config.show,
+  // },
   {
     key: "osu",
     label: "osu!",
@@ -53,15 +53,15 @@ const sections: SocialSectionConfig[] = [
     Component: OsuCard,
     visible: osu_config.show,
   },
-  {
-    key: "twitter",
-    label: "X / Twitter",
-    description: "Thoughts & updates",
-    accentColor: "29,155,240",
-    accentHex: "#1d9bf0",
-    Component: TwitterCard,
-    visible: twitter_config.show,
-  },
+  // {
+  //   key: "twitter",
+  //   label: "X / Twitter",
+  //   description: "Thoughts & updates",
+  //   accentColor: "29,155,240",
+  //   accentHex: "#1d9bf0",
+  //   Component: TwitterCard,
+  //   visible: twitter_config.show,
+  // },
 ].filter((s) => s.visible);
 
 const charVariants = {

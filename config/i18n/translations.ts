@@ -34,12 +34,12 @@ const en: Translations = {
       "ACGN Lover",
     ],
     interests: [
-      { label: "Rhythm Games", emoji: "🎵" },
-      { label: "Open Source", emoji: "🔓" },
-      { label: "UI Design", emoji: "🎨" },
-      { label: "Music", emoji: "🎧" },
-      { label: "Anime", emoji: "✨" },
-      { label: "Late Night Coding", emoji: "🌙" },
+      { label: "Rhythm Games", emoji: "" },
+      { label: "Open Source", emoji: "" },
+      { label: "UI Design", emoji: "" },
+      { label: "Music", emoji: "" },
+      { label: "Anime", emoji: "" },
+      { label: "Late Night Coding", emoji: "" },
     ],
     currently: [
       "Building personal homepage with React & Next.js",
@@ -106,6 +106,10 @@ const en: Translations = {
     },
     briefIntro:
       "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, and creative coding.",
+    timelineSubtitle: "Journey",
+    timelineHeading: "Timeline",
+    timelineDescription:
+      "Every milestone marks a step forward. From first lines of code to building real applications — this is the path that shaped who I am today.",
   },
   blog: {
     sectionTitle: "Blog",
@@ -287,6 +291,10 @@ const zh: Translations = {
     },
     briefIntro:
       "一个热爱构建和探索新技术的开发者。热衷于开源、音游和创意编程。",
+    timelineSubtitle: "旅程",
+    timelineHeading: "时间线",
+    timelineDescription:
+      "每一个里程碑都是前进的一步。从写下第一行代码到构建真正的应用——这是塑造了今日之我的旅程。",
   },
   blog: {
     sectionTitle: "博客",
@@ -306,7 +314,7 @@ const zh: Translations = {
     copyLink: "复制链接",
   },
   contact: {
-    heading: "Contact",
+    heading: "CONTACT",
     subtitle: "取得联系",
     description: "有问题或想合作？给我留言吧。",
     name: "姓名",
@@ -321,7 +329,7 @@ const zh: Translations = {
     error: "出了点问题，请重试。",
   },
   social: {
-    heading: "Social Card",
+    heading: "SOCIAL",
     subtitle: "连接",
     description: "我分享、创作和与世界连接的地方",
   },
@@ -340,7 +348,7 @@ const zh: Translations = {
     },
   },
   music: {
-    heading: "Music",
+    heading: "MUSIC",
     subtitle: "聆听",
     description:
       "原创编曲与电子作品。下载并享受。",

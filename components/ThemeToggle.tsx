@@ -15,11 +15,21 @@ export default function ThemeToggle() {
   }
 
   const isDark = resolvedTheme === "dark";
+  const chromeMuted = isDark ? "var(--muted)" : "rgba(250, 250, 250, 0.68)";
+  const chromeHoverBackground = isDark
+    ? "rgba(255, 255, 255, 0.06)"
+    : "rgba(255, 255, 255, 0.1)";
 
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-300 hover:bg-surface"
+      className="relative w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-300"
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = chromeHoverBackground;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "transparent";
+      }}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       <motion.div
@@ -30,7 +40,7 @@ export default function ThemeToggle() {
         }}
         transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="absolute"
-        style={{ color: "var(--muted)" }}
+        style={{ color: chromeMuted }}
       >
         <svg
           viewBox="0 0 24 24"
@@ -54,7 +64,7 @@ export default function ThemeToggle() {
         }}
         transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="absolute"
-        style={{ color: "var(--muted)" }}
+        style={{ color: chromeMuted }}
       >
         <svg
           viewBox="0 0 24 24"
