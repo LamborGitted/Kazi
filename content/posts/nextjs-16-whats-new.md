@@ -1,60 +1,60 @@
 ---
-title: "Building with Next.js 16: What's New (write by AI)"
+title: "Next.js 16 新特性：构建的未来 (write by AI)"
 date: "2026-04-15"
-excerpt: "Exploring the latest features in Next.js 16, including the new compiler, improved caching, and breaking changes you should know about."
-tags: ["Next.js", "React", "Web Development", "TypeScript"]
+excerpt: "探索 Next.js 16 的最新特性，包括全新编译器、改进的缓存策略以及你需要了解的重大变更。"
+tags: ["Next.js", "React", "Web 开发", "TypeScript"]
 ---
 
-## The Evolution Continues
+## 持续进化
 
-Next.js 16 brings a **completely rewritten compiler** that dramatically improves build times. If you've been working with Next.js for a while, you know that build performance has always been a pain point for larger projects.
+Next.js 16 带来了一个**完全重写的编译器**，大幅提升了构建速度。如果你一直在使用 Next.js，你可能知道构建性能一直是大项目的一大痛点。
 
-The new compiler is built on top of the SWC infrastructure but takes a different approach to code transformation. Instead of processing files one at a time, it batches transformations and caches intermediate results more aggressively.
+新编译器建立在 SWC 基础设施之上，但采用了不同的代码转换方法。它不再逐个处理文件，而是批量处理转换并更积极地缓存中间结果。
 
-### Key Changes
+### 关键变化
 
-Here's what you need to know:
+以下是你需要了解的：
 
-1. **New Compiler Architecture** — The build pipeline has been completely redesigned
-2. **Breaking API Changes** — Some conventions from Next.js 15 have been deprecated
-3. **Improved Caching** — Smarter cache invalidation strategies
-4. **Better Dev Experience** — Faster HMR and more accurate error reporting
+1. **新编译器架构** — 构建管线已完全重新设计
+2. **重大 API 变更** — 一些 Next.js 15 的约定已被弃用
+3. **改进的缓存** — 更智能的缓存失效策略
+4. **更好的开发体验** — 更快的 HMR 和更准确的错误报告
 
-### Migration Guide
+### 迁移指南
 
-The migration from Next.js 15 to 16 requires attention to detail. Some file conventions have changed, and the configuration API has been simplified.
+从 Next.js 15 迁移到 16 需要注意细节。一些文件约定已更改，配置 API 也被简化了。
 
 ```typescript
-// next.config.ts - simplified
+// next.config.ts - 简化版
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // New simplified config
+  // 新的简化配置
 };
 
 export default nextConfig;
 ```
 
 <div class="callout">
-  <strong>Important:</strong> Make sure to read the migration guide carefully. Some changes are not backward compatible.
+  <strong>重要提示：</strong> 请务必仔细阅读迁移指南。一些变更不向后兼容。
 </div>
 
-## Performance Benchmarks
+## 性能基准
 
-In our testing, the new compiler shows impressive improvements:
+在我们的测试中，新编译器展现了令人印象深刻的改进：
 
-| Metric | Next.js 15 | Next.js 16 | Improvement |
-|--------|-----------|-----------|-------------|
-| Cold Build | 45s | 12s | 73% faster |
-| HMR Update | 800ms | 150ms | 81% faster |
-| Production Build | 120s | 38s | 68% faster |
+| 指标 | Next.js 15 | Next.js 16 | 提升 |
+|------|-----------|-----------|------|
+| 冷构建 | 45s | 12s | 快 73% |
+| HMR 更新 | 800ms | 150ms | 快 81% |
+| 生产构建 | 120s | 38s | 快 68% |
 
-## What This Means for You
+## 这对你意味着什么
 
-If you're starting a new project, Next.js 16 is the clear choice. For existing projects, the migration effort is worthwhile — the performance gains alone justify the upgrade.
+如果你正在开始一个新项目，Next.js 16 是明确的选择。对于现有项目，迁移的努力是值得的——仅性能提升就足以成为升级的理由。
 
-The team has done an excellent job maintaining backward compatibility where possible, while still making the bold decisions needed to move the framework forward.
+团队在尽可能保持向后兼容性方面做得非常出色，同时仍然做出了推动框架前进所需的大胆决策。
 
-> The best time to upgrade was yesterday. The second best time is now.
+> 升级的最佳时机是昨天。第二好的时机是现在。
 
-Happy building!
+祝构建愉快！

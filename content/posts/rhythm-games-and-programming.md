@@ -1,57 +1,57 @@
 ---
-title: "Rhythm Games and Programming: A Surprising Connection (write by AI)" 
+title: "音游与编程：意想不到的联系 (write by AI)"
 date: "2026-04-05"
-excerpt: "How playing osu!mania and other rhythm games shaped my approach to coding, problem-solving, and the pursuit of mastery."
-tags: ["osu!", "Gaming", "Personal", "Mindset"]
+excerpt: "玩 osu!mania 等音游如何影响了我的编码方式、问题解决思路和对精通的追求。"
+tags: ["osu!", "游戏", "个人", "心态"]
 ---
 
-## Two Worlds, One Rhythm
+## 两个世界，一种节奏
 
-At first glance, rhythm games and programming have nothing in common. One is about hitting notes to music; the other is about writing instructions for machines. But dig deeper, and you'll find they share fundamental patterns.
+乍一看，音游和编程毫无共同之处。一个是跟着音乐打音符，另一个是给机器写指令。但深入挖掘，你会发现它们共享着根本的模式。
 
-### Pattern Recognition
+### 模式识别
 
-In osu!mania, you learn to recognize patterns — trills, jacks, streams, jumpstreams. Your brain processes these patterns faster than conscious thought allows. The same thing happens in programming.
+在 osu!mania 中，你学会识别模式——颤音、连打、连流、跳流。你的大脑比意识思维更快速地处理这些模式。编程中也是如此。
 
-When you've debugged enough race conditions, you develop an intuition for them. When you've refactored enough components, you start seeing architectural patterns before they fully form.
+当你调试过足够多的竞态条件，你就会对它们产生直觉。当你重构过足够多的组件，你就能在架构模式完全形成之前看到它们。
 
 ```javascript
-// Just as a stream pattern in osu! has a rhythm
-// Good code has a rhythm too
+// 就像 osu! 中的连流模式有节奏一样
+// 好的代码也有节奏
 const patterns = notes
   .filter(isHittable)
   .map(toAction)
   .reduce(accumulate, initialState);
 ```
 
-### The Practice Loop
+### 练习循环
 
-Getting better at osu! requires:
-1. **Consistent practice** — Playing regularly, not just when you feel like it
-2. **Deliberate difficulty** — Pushing slightly beyond your comfort zone
-3. **Immediate feedback** — You know instantly if you hit the note or not
-4. **Pattern analysis** — Reviewing replays to understand mistakes
+在 osu! 中变得更好需要：
+1. **持续练习** — 定期游玩，而不是心血来潮时才玩
+2. **刻意提升难度** — 略微突破舒适区
+3. **即时反馈** — 你立刻就知道是否击中了音符
+4. **模式分析** — 回放以理解错误
 
-Sound familiar? These are the exact same principles behind improving at programming.
+听起来熟悉吗？这些正是提升编程能力的相同原则。
 
 <div class="callout">
-  <strong>Personal Note:</strong> I started playing osu!mania in 2021. The discipline I developed from grinding maps transferred directly to how I approach learning new technologies.
+  <strong>个人感悟：</strong> 我从 2021 年开始玩 osu!mania。从刷图中培养的自律直接转化到了我学习新技术的方式上。
 </div>
 
-## Flow State
+## 心流状态
 
-There's a moment in osu! when everything clicks. Your fingers move before you think. The notes become music. You're in flow.
+在 osu! 中有这样一个时刻，一切都恰到好处。你的手指在思考之前就行动了。音符变成了音乐。你进入了心流。
 
-The same state exists in programming. It's those hours where code pours out of you, where problems dissolve into solutions, where the outside world fades away. Csikszentmihalyi called it flow, and it's the most productive state a developer can achieve.
+编程中也存在同样的状态。那是代码从你手中流出的时光，问题化为解决方案，外部世界渐渐消失。契克森米哈赖称之为心流，这是开发者能达到的最高效状态。
 
-### Finding Your Flow
+### 找到你的心流
 
-For me, flow in coding comes easier after a session of osu!. It's like a warm-up for the brain — activating the pattern recognition, timing precision, and focus needed for deep work.
+对我来说，在 osu! 一局之后更容易进入编码心流。这就像是大脑的热身——激活深度工作所需的模式识别、精准时机和专注力。
 
-## Beyond the Game
+## 超越游戏
 
-Rhythm games taught me that mastery is a journey, not a destination. There's always a harder map, a higher score, a more complex pattern. In programming, there's always a new framework, a deeper architectural challenge, a more elegant solution.
+音游教会我，精通是一段旅程，而非终点。总有更难的谱面、更高的分数、更复杂的模式。在编程中，总有新的框架、更深的架构挑战、更优雅的解决方案。
 
-> The beat goes on, whether you hit the notes or not. What matters is that you keep playing.
+> 无论你是否击中音符，节拍都在继续。重要的是你一直在演奏。
 
-That's true for coding too. The industry keeps moving. Keep learning, keep building, keep finding your rhythm.
+编程也是如此。行业在持续前进。持续学习，持续构建，持续找到你的节奏。

@@ -1,28 +1,28 @@
 ---
-title: "Designing Dark Mode That Actually Looks Good (write by AI)"
+title: "设计真正好看的暗色模式 (write by AI)"
 date: "2026-03-28"
-excerpt: "A deep dive into the nuances of dark mode design — why simply inverting colors doesn't work and how to create dark themes that feel intentional."
-tags: ["Design", "CSS", "Dark Mode", "UI/UX"]
+excerpt: "深入探讨暗色模式设计的细节——为什么简单地反转颜色行不通，以及如何创建有意感的暗色主题。"
+tags: ["设计", "CSS", "暗色模式", "UI/UX"]
 ---
 
-## The Problem with Most Dark Modes
+## 大多数暗色模式的问题
 
-Most dark modes are just... inverted light modes. White becomes black, black becomes white, and everything looks harsh and uncomfortable. A good dark mode requires **completely rethinking your color system**.
+大多数暗色模式只是……反转的亮色模式。白变黑，黑变白，一切都显得刺眼而不舒适。好的暗色模式需要**完全重新思考你的色彩系统**。
 
-### The Cardinal Sins of Dark Mode
+### 暗色模式的致命罪过
 
-1. **Pure black backgrounds** — `#000000` creates too much contrast with white text
-2. **Desaturated colors** — Colors that look great on white look neon on dark backgrounds
-3. **Ignoring elevation** — Surfaces need subtle differentiation in dark mode too
-4. **Forgetting about shadows** — Shadows don't work on dark backgrounds
+1. **纯黑背景** — `#000000` 与白色文字的对比度太强
+2. **去饱和色彩** — 在白色上好看的色彩在暗色背景上会显得霓虹
+3. **忽略层级** — 暗色模式下表面也需要微妙的区分
+4. **忘记阴影** — 阴影在暗色背景上不起作用
 
-## Building a Proper Dark Palette
+## 构建正确的暗色调色板
 
-Here's the approach I use:
+以下是我使用的方法：
 
 ```css
 :root {
-  /* Light - warm and inviting */
+  /* 亮色 - 温暖而亲切 */
   --background: #fafafa;
   --foreground: #0a0a0a;
   --surface: #f4f4f5;
@@ -31,7 +31,7 @@ Here's the approach I use:
 }
 
 .dark {
-  /* Dark - not pure black, slightly warm */
+  /* 暗色 - 不是纯黑，略带暖调 */
   --background: #050505;
   --foreground: #fafafa;
   --surface: #18181b;
@@ -40,11 +40,11 @@ Here's the approach I use:
 }
 ```
 
-Notice the accent color shifts slightly between modes. On dark backgrounds, a lighter, softer pink reads better than the full saturation version.
+注意强调色在两种模式之间有微妙的变化。在暗色背景上，更浅、更柔和的粉色比完全饱和版本更易阅读。
 
-### The Elevation System
+### 层级系统
 
-In dark mode, elevation is communicated through subtle lightening:
+在暗色模式中，层级通过微妙的提亮来传达：
 
 ```css
 .surface-base { background: var(--background); }
@@ -52,32 +52,32 @@ In dark mode, elevation is communicated through subtle lightening:
 .surface-overlay { background: #27272a; }
 ```
 
-Each level adds just enough contrast to create depth without being obvious.
+每个层级增加刚好足够的对比度来创造深度，而不显得突兀。
 
-## Text and Readability
+## 文字与可读性
 
 <div class="callout">
-  <strong>Key Insight:</strong> Never use pure white (#ffffff) for body text on dark backgrounds. Use a slightly dimmed white (like #e4e4e7 or #fafafa) to reduce eye strain.
+  <strong>关键洞察：</strong> 永远不要在暗色背景上使用纯白（#ffffff）作为正文文字。使用略微降低亮度的白色（如 #e4e4e7 或 #fafafa）来减少视觉疲劳。
 </div>
 
-### Contrast Ratios
+### 对比度
 
-WCAG guidelines still apply in dark mode. But the *feeling* of good contrast is different. Aim for:
-- **Headings**: Higher contrast — closer to white
-- **Body text**: Medium contrast — slightly dimmed
-- **Muted text**: Lower contrast — but still readable
-- **Disabled text**: Low contrast — clearly inactive
+WCAG 指南在暗色模式下同样适用。但良好对比度的*感觉*是不同的。目标如下：
+- **标题**：高对比度 — 接近白色
+- **正文**：中等对比度 — 略微降低亮度
+- **辅助文字**：低对比度 — 但仍可阅读
+- **禁用文字**：低对比度 — 明确不可用
 
-## Motion and Atmosphere
+## 动效与氛围
 
-Dark mode is an opportunity to add subtle atmospheric effects:
+暗色模式是添加微妙氛围效果的机会：
 
-- **Grain overlays** — Add texture to prevent banding on dark gradients
-- **Glow effects** — Accent colors can emit subtle light
-- **Transparency** — Frosted glass effects look stunning on dark backgrounds
+- **噪点叠加** — 添加纹理以防止暗色渐变出现条带
+- **发光效果** — 强调色可以散发微妙的光芒
+- **透明度** — 磨砂玻璃效果在暗色背景上令人惊艳
 
-## Conclusion
+## 结论
 
-A dark mode worth shipping takes as much design effort as the light mode. Don't treat it as an afterthought. Your users who prefer dark mode deserve the same level of care and intentionality.
+值得发布的暗色模式需要与亮色模式同样多的设计精力。不要把它当作事后的补充。偏好暗色模式的用户应该得到同等水平的关怀和用心。
 
-> Dark mode isn't just a color scheme — it's an atmosphere.
+> 暗色模式不仅仅是一套配色方案——它是一种氛围。

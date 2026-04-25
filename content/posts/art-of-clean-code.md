@@ -1,22 +1,22 @@
 ---
-title: "The Art of Clean Code: Lessons from Real Projects (write by AI)
+title: "整洁代码的艺术：来自真实项目的经验 (write by AI)"
 date: "2026-04-10"
-excerpt: "Practical insights on writing maintainable code, drawn from years of experience working on production systems and open source projects."
-tags: ["Clean Code", "Best Practices", "Software Engineering", "TypeScript"]
+excerpt: "关于编写可维护代码的实用洞察，来自多年生产系统和开源项目的经验。"
+tags: ["整洁代码", "最佳实践", "软件工程", "TypeScript"]
 ---
 
-## Why Clean Code Matters
+## 为什么整洁代码很重要
 
-We've all been there — staring at a 500-line function wondering what it does, afraid to touch anything because one wrong move breaks everything. Clean code isn't about perfectionism; it's about **empathy for your future self** and your teammates.
+我们都经历过——盯着一个 500 行的函数 wondering 它做了什么，不敢碰任何东西因为一个错误的操作就会破坏一切。整洁代码不是完美主义；它是对**未来的自己**和队友的同理心。
 
-### The Real Cost of Messy Code
+### 混乱代码的真实代价
 
-Technical debt compounds like interest. Every shortcut you take today makes tomorrow's work harder. But unlike financial debt, you can't just pay it off later — you have to live with the consequences every single day.
+技术债务像利息一样复利。你今天走的每一个捷径都让明天的工作更难。但与金融债务不同，你不能只是以后偿还——你每天都要承受后果。
 
-Consider this refactoring journey:
+看看这个重构之旅：
 
 ```typescript
-// Before: a function that does too much
+// 之前：一个做了太多事情的函数
 function processUser(data: any) {
   if (data.name && data.email) {
     const user = db.findUser(data.email);
@@ -33,7 +33,7 @@ function processUser(data: any) {
 ```
 
 ```typescript
-// After: clear intent, single responsibility
+// 之后：意图清晰，单一职责
 async function updateProfile(input: ProfileInput): Promise<ProfileResult> {
   const user = await findExistingUser(input.email);
   if (!user) return ProfileResult.notFound();
@@ -46,32 +46,32 @@ async function updateProfile(input: ProfileInput): Promise<ProfileResult> {
 }
 ```
 
-## Principles That Actually Help
+## 真正有用的原则
 
-### 1. Name Things by Intent
+### 1. 用意图命名
 
-Variable names are documentation. `d` means nothing. `elapsedTimeInDays` means everything.
+变量名就是文档。`d` 什么也不代表。`elapsedTimeInDays` 说明了一切。
 
-### 2. Functions Should Tell a Story
+### 2. 函数应该讲述故事
 
-A well-named function with well-named parameters reads like a sentence:
+一个命名良好的函数配合命名良好的参数读起来就像一句话：
 
 ```typescript
 await sendWelcomeEmail(newSubscriber, premiumTemplate);
 ```
 
-### 3. Embrace Immutability
+### 3. 拥抱不可变性
 
-Mutable state is the root of many bugs. When data doesn't change unexpectedly, reasoning about code becomes dramatically easier.
+可变状态是许多 bug 的根源。当数据不会意外改变时，对代码的推理变得显著更容易。
 
 <div class="callout">
-  <strong>Pro Tip:</strong> Use <code>readonly</code> and <code>as const</code> in TypeScript to enforce immutability at the type level.
+  <strong>专业提示：</strong> 在 TypeScript 中使用 <code>readonly</code> 和 <code>as const</code> 在类型层面强制不可变性。
 </div>
 
-## The Bigger Picture
+## 更大的图景
 
-Clean code is a practice, not a destination. You won't write perfect code every time, and that's okay. What matters is the trajectory — are your codebases getting cleaner over time, or messier?
+整洁代码是一种实践，不是一个终点。你不会每次都写出完美的代码，这没关系。重要的是趋势——你的代码库是在变得更整洁还是更混乱？
 
-> Any fool can write code that a computer can understand. Good programmers write code that humans can understand. — Martin Fowler
+> 任何傻瓜都能写出计算机能理解的代码。优秀的程序员写出人类能理解的代码。—— Martin Fowler
 
-Start small. Refactor one function today. Name one variable better. Delete one line of dead code. The compound effect of these small improvements is transformative.
+从小处开始。今天重构一个函数。给一个变量取个更好的名字。删除一行死代码。这些小改进的复利效应是变革性的。
