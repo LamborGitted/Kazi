@@ -9,6 +9,7 @@ import { navLinks } from "@/config/header.data";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useLanguage } from "@/components/LanguageProvider";
+import HuePicker from "./ControlComponent/HuePicker";
 
 const underlineVariants = {
   rest: { width: 0, left: "50%" },
@@ -61,7 +62,7 @@ export default function Header() {
     ? "var(--muted)"
     : "rgba(250, 250, 250, 0.68)";
   const chromeForeground = "rgba(250, 250, 250, 0.96)";
-  const hamburgerColor = mounted && resolvedTheme === "dark" ? "#fafafa" : "#0a0a0a";
+  const hamburgerColor = mounted && resolvedTheme === "dark" ? "#fafafa" : "#fafafa";
 
   return (
     <header
@@ -103,6 +104,8 @@ export default function Header() {
             }}
           />
         </Link> */}
+
+        <HuePicker/>
 
         <nav className="hidden md:flex items-center gap-1 ml-auto">
           {translatedNavLinks.map((link) => (

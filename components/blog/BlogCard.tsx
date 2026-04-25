@@ -38,7 +38,7 @@ export default function BlogCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 1, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
         delay: index * 0.08,
@@ -128,14 +128,14 @@ export default function BlogCard({
             </div>
           </div>
 
-          <div
+          {/* <div
             className="absolute bottom-0 left-0 h-px transition-all duration-500"
             style={{
               width: hovered ? "100%" : "0%",
               background:
                 "linear-gradient(90deg, var(--accent), transparent)",
             }}
-          />
+          /> */}
         </motion.article>
       </Link>
     </motion.div>

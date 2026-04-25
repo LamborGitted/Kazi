@@ -132,7 +132,7 @@ export default function ContactPage() {
 
   return (
     <main className="flex flex-col min-h-screen relative">
-      <section className="relative flex flex-col items-center justify-center py-28 sm:py-36 px-6 overflow-hidden">
+      <section className=" relative flex flex-col items-center justify-center py-28 sm:py-36 px-6 overflow-hidden ">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-accent/5 blur-3xl animate-float" />
           <div className="absolute bottom-1/3 -right-32 w-80 h-80 rounded-full bg-accent/5 blur-3xl animate-float-delay" />
