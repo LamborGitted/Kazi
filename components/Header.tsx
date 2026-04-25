@@ -61,6 +61,7 @@ export default function Header() {
     ? "var(--muted)"
     : "rgba(250, 250, 250, 0.68)";
   const chromeForeground = "rgba(250, 250, 250, 0.96)";
+  const hamburgerColor = mounted && resolvedTheme === "dark" ? "#fafafa" : "#0a0a0a";
 
   return (
     <header
@@ -175,7 +176,7 @@ export default function Header() {
               <span
                 className="block h-px w-full transition-all duration-300 origin-center"
                 style={{
-                  background: "var(--foreground)",
+                  background: hamburgerColor,
                   transform: mobileOpen
                     ? "rotate(45deg) translateY(3.5px)"
                     : "none",
@@ -184,7 +185,7 @@ export default function Header() {
               <span
                 className="block h-px w-full transition-all duration-300 origin-center"
                 style={{
-                  background: "var(--foreground)",
+                  background: hamburgerColor,
                   transform: mobileOpen
                     ? "rotate(-45deg) translateY(-3.5px)"
                     : "none",

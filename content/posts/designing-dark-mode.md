@@ -1,5 +1,5 @@
 ---
-title: "Designing Dark Mode That Actually Looks Good"
+title: "Designing Dark Mode That Actually Looks Good (write by AI)"
 date: "2026-03-28"
 excerpt: "A deep dive into the nuances of dark mode design — why simply inverting colors doesn't work and how to create dark themes that feel intentional."
 tags: ["Design", "CSS", "Dark Mode", "UI/UX"]

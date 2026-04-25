@@ -34,7 +34,7 @@ const allProjects: Project[] = [
       "从第一次更广阔的认识Linux，到折腾出还算不错的Arch Linux配置。",
     href: "https://github.com/LamborGitted/my-arch-dotfiles",
     tags: ["Shell", "Linux", "DevOps"],
-    year: "2024",
+    year: "2025",
     visible: true,
   },
   {

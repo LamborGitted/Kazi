@@ -1,5 +1,5 @@
 ---
-title: "Rhythm Games and Programming: A Surprising Connection"
+title: "Rhythm Games and Programming: A Surprising Connection (write by AI)" 
 date: "2026-04-05"
 excerpt: "How playing osu!mania and other rhythm games shaped my approach to coding, problem-solving, and the pursuit of mastery."
 tags: ["osu!", "Gaming", "Personal", "Mindset"]

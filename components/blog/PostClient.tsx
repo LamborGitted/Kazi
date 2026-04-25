@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import MarkdownRenderer from "@/components/blog/MarkdownRenderer";
@@ -33,6 +33,7 @@ export default function PostClient({ post, postZh, recentPosts, recentPostsZh }:
   const lineInView = useInView(lineRef, { once: true, margin: "-20px" });
   const { t, locale } = useLanguage();
   const blog = t.blog;
+  const [copied, setCopied] = useState(false);
 
   const currentPost = locale === "zh" && postZh ? postZh : post;
   const currentRecent = locale === "zh" ? recentPostsZh : recentPosts;
@@ -221,19 +222,22 @@ export default function PostClient({ post, postZh, recentPosts, recentPostsZh }:
                     {blog.share}
                   </span>
                   <div className="mt-3 flex gap-2">
-                    <button
+                    <motion.button
                       onClick={() => {
                         navigator.clipboard.writeText(window.location.href);
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000);
                       }}
+                      whileTap={{ scale: 0.95 }}
                       className="px-3 py-1.5 rounded-lg border text-xs transition-all duration-200 hover:border-accent hover:text-accent cursor-pointer"
                       style={{
-                        borderColor: "var(--border)",
-                        color: "var(--muted)",
-                        fontFamily: "var(--font-geist-mono)",
+                        borderColor: copied ? "var(--accent)" : "var(--border)",
+                        color: copied ? "var(--accent)" : "var(--muted)",
+                        fontFamily: "var(--font-geist-geist-mono)",
                       }}
                     >
-                      {blog.copyLink}
-                    </button>
+                      {copied ? blog.copied : blog.copyLink}
+                    </motion.button>
                   </div>
                 </div>
               </div>

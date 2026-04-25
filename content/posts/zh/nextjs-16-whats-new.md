@@ -1,5 +1,5 @@
 ---
-title: "Next.js 16 新特性：构建的未来"
+title: "Next.js 16 新特性：构建的未来 (write by AI)"
 date: "2026-04-15"
 excerpt: "探索 Next.js 16 的最新特性，包括全新编译器、改进的缓存策略以及你需要了解的重大变更。"
 tags: ["Next.js", "React", "Web 开发", "TypeScript"]

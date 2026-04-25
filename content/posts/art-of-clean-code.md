@@ -1,5 +1,5 @@
 ---
-title: "The Art of Clean Code: Lessons from Real Projects"
+title: "The Art of Clean Code: Lessons from Real Projects (write by AI)
 date: "2026-04-10"
 excerpt: "Practical insights on writing maintainable code, drawn from years of experience working on production systems and open source projects."
 tags: ["Clean Code", "Best Practices", "Software Engineering", "TypeScript"]

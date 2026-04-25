@@ -1,5 +1,5 @@
 ---
-title: "Building with Next.js 16: What's New"
+title: "Building with Next.js 16: What's New (write by AI)"
 date: "2026-04-15"
 excerpt: "Exploring the latest features in Next.js 16, including the new compiler, improved caching, and breaking changes you should know about."
 tags: ["Next.js", "React", "Web Development", "TypeScript"]

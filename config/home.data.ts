@@ -7,7 +7,8 @@ const socialLinks = [
   { 
     label: "GitHub", 
     href: "https://github.com/LamborGitted", 
-    icon: "github" },
+    icon: "github" 
+  },
   {
     label: "Bilibili",
     href: "https://space.bilibili.com/1517690573",

@@ -128,6 +128,7 @@ const en: Translations = {
     morePosts: "More Posts",
     share: "Share",
     copyLink: "Copy Link",
+    copied: "Copied!",
   },
   contact: {
     heading: "CONTACT",
@@ -312,6 +313,7 @@ const zh: Translations = {
     morePosts: "更多文章",
     share: "分享",
     copyLink: "复制链接",
+    copied: "已复制！",
   },
   contact: {
     heading: "CONTACT",

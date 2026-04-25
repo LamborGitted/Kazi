@@ -540,6 +540,7 @@ export default function AboutPage() {
       </section>
 
       <Marquee roles={translatedRoles} />
+      <Marquee roles={translatedRoles} reverse />
 
       <EnhancedTimeline
         timeline={translatedTimeline}
@@ -664,7 +665,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Marquee roles={translatedRoles} reverse />
+      
 
       <div className="h-20" />
     </div>

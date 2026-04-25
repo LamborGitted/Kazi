@@ -71,6 +71,7 @@ export interface BlogTranslations {
   morePosts: string;
   share: string;
   copyLink: string;
+  copied: string;
 }
 
 export interface ContactTranslations {

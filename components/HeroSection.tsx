@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { mainTitle } from "@/config/home.data";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useEffect, useState } from "react";
 
 const charVariants = {
   hidden: { opacity: 0, y: 40, rotateX: -90 },
@@ -36,6 +37,21 @@ export default function HeroSection() {
   const { t } = useLanguage();
   const translatedLines = t.hero.lines;
 
+  const [line1Angle, setLine1Angle] = useState(30);
+  const [line2Angle, setLine2Angle] = useState(150);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const ratio = window.innerWidth / window.innerHeight;
+      setLine1Angle(20 + ratio * 10);
+      setLine2Angle(140 + ratio * 10);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section className="relative flex flex-col items-center justify-center w-full min-h-[calc(100vh-4rem)] px-6 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -47,13 +63,13 @@ export default function HeroSection() {
         <motion.div
           className="absolute w-500 h-8 bg-accent blur-2xl"
           initial={{ rotate: 0, opacity: 1 }}
-          animate={{ rotate: 30, opacity: 1 }}
+          animate={{ rotate: line1Angle, opacity: 1 }}
           transition={{ delay: 0.4, duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         />
         <motion.div
           className="absolute w-500 h-8 bg-accent blur-2xl"
           initial={{ rotate: 0, opacity: 1 }}
-          animate={{ rotate: 150, opacity: 1 }}
+          animate={{ rotate: line2Angle, opacity: 1 }}
           transition={{ delay: 0.4, duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         />
       </div>
