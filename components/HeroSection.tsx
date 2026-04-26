@@ -120,14 +120,14 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* <motion.p
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.4, duration: 0.6 }}
           className="mt-6 text-lg sm:text-xl font-light text-foreground/70 max-w-lg"
         >
           {t.hero.subtitle}
-        </motion.p> */}
+        </motion.p>
 
       </div>
 

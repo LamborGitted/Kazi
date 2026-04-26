@@ -202,7 +202,7 @@ const zh: Translations = {
     music: "MUSIC",
   },
   hero: {
-    subtitle: "认知无限，创造无穷",
+    subtitle: "兴趣使然创造，热爱依旧坚持",
     lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "ACG 爱好者"],
     explore: "探索我的卡片",
   },

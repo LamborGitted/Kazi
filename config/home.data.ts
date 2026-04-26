@@ -19,11 +19,11 @@ const socialLinks = [
     href: "https://osu.ppy.sh/users/35977401",
     icon: "osu",
   },
-  {
-    label: "Twitter",
-    href: "https://x.com/LamborGitted",
-    icon: "twitter",
-  },
+  // {
+  //   label: "Twitter",
+  //   href: "https://x.com/LamborGitted",
+  //   icon: "twitter",
+  // },
 ];
 
 export { mainTitle, subTitle, heroLines, briefIntro, socialLinks };

@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { techStack } from "@/config/about.data";
 import { useLanguage } from "@/components/LanguageProvider";
+import EnhancedTimeline from "@/components/EnhancedTimeline";
 
 const charVariants = {
   hidden: { opacity: 0, y: 60, rotateX: -90 },
@@ -131,6 +132,7 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
+
 function OrbitingTags({
   items,
 }: {
@@ -189,186 +191,6 @@ function TypingLine({ text, delay = 0 }: { text: string; delay?: number }) {
         {text}
       </motion.span>
     </div>
-  );
-}
-
-function EnhancedTimeline({ timeline, subtitle, heading, description }: { timeline: { year: string; title: string; description: string }[]; subtitle: string; heading: string; description: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-
-  return (
-    <section ref={containerRef} className="relative py-20 sm:py-32 px-6">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-accent/[0.03] blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/[0.02] blur-3xl" />
-      </div>
-
-      <div className="max-w-4xl mx-auto relative">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-center mb-16 sm:mb-20"
-        >
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-xs font-mono text-accent tracking-widest uppercase"
-          >
-            {subtitle}
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="mt-4 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter"
-          >
-            {heading}
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-6 text-base sm:text-lg text-foreground/50 max-w-2xl mx-auto leading-relaxed"
-          >
-            {description}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5, duration: 0.4 }}
-            className="mt-8 h-px w-24 mx-auto bg-border relative overflow-hidden"
-          >
-            <motion.div
-              className="absolute inset-y-0 left-0 bg-accent"
-              initial={{ width: 0 }}
-              animate={isInView ? { width: "100%" } : {}}
-              transition={{ delay: 0.8, duration: 1 }}
-            />
-          </motion.div>
-        </motion.div>
-
-        <div className="relative">
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border/30 hidden sm:block" />
-          
-          <div className="absolute left-1/2 top-0 bottom-0 w-px hidden sm:block">
-            <motion.div
-              initial={{ height: "0%" }}
-              animate={isInView ? { height: "100%" } : {}}
-              transition={{ delay: 0.3, duration: 2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="w-full bg-gradient-to-b from-accent via-accent/80 to-accent/0 relative"
-            >
-              <motion.div
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent shadow-[0_0_20px_var(--accent)]"
-              />
-            </motion.div>
-          </div>
-
-          <div className="space-y-12 sm:space-y-16">
-            {timeline.map((item, i) => {
-              const isLeft = i % 2 === 0;
-              return (
-                <motion.div
-                  key={item.year}
-                  initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{
-                    delay: 0.4 + i * 0.12,
-                    duration: 0.7,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  }}
-                  className={`relative flex items-center ${isLeft ? 'sm:flex-row' : 'sm:flex-row-reverse'}`}
-                >
-                  <div className={`hidden sm:flex w-1/2 ${isLeft ? 'justify-end pr-12' : 'justify-start pl-12'}`}>
-                    <motion.div
-                      whileHover={{ 
-                        scale: 1.02,
-                        y: -4,
-                        boxShadow: "0 20px 40px -12px rgba(0,0,0,0.15)"
-                      }}
-                      className="group relative p-6 rounded-2xl border border-border bg-surface/60 backdrop-blur-sm max-w-sm cursor-pointer transition-all duration-300"
-                    >
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/0 via-transparent to-accent/0 group-hover:from-accent/5 group-hover:to-accent/3 transition-all duration-500" />
-                      <div className="relative z-10">
-                        <span className="text-xs font-mono text-accent/80 tracking-wider uppercase">
-                          {item.year}
-                        </span>
-                        <h3 className="mt-2 text-lg font-semibold leading-tight">
-                          {item.title}
-                        </h3>
-                        <p className="mt-2 text-sm text-foreground/60 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  <div className="absolute left-1/2 -translate-x-1/2 hidden sm:block">
-                    <motion.div
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={isInView ? { scale: 1, rotate: 0 } : {}}
-                      transition={{ 
-                        delay: 0.6 + i * 0.12,
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 15
-                      }}
-                      className="relative"
-                    >
-                      <motion.div
-                        animate={{ 
-                          boxShadow: [
-                            "0 0 0 0 rgba(236, 72, 153, 0.4)",
-                            "0 0 0 12px rgba(236, 72, 153, 0)",
-                          ]
-                        }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-4 h-4 rounded-full bg-accent relative z-10"
-                      />
-                      <motion.div
-                        animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute inset-0 w-4 h-4 rounded-full bg-accent/50 blur-md"
-                      />
-                    </motion.div>
-                  </div>
-
-                  <div className="w-full sm:w-1/2 pl-12 sm:pl-0 sm:justify-start sm:flex">
-                    <motion.div
-                      whileHover={{ 
-                        scale: 1.02,
-                        y: -4,
-                        boxShadow: "0 20px 40px -12px rgba(0,0,0,0.15)"
-                      }}
-                      className="sm:hidden group relative p-5 rounded-2xl border border-border bg-surface/60 backdrop-blur-sm cursor-pointer transition-all duration-300"
-                    >
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/0 via-transparent to-accent/0 group-hover:from-accent/5 group-hover:to-accent/3 transition-all duration-500" />
-                      <div className="relative z-10 flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-accent mt-2 shrink-0" />
-                        <div className="flex-1">
-                          <span className="text-xs font-mono text-accent/80 tracking-wider uppercase block mb-1">
-                            {item.year}
-                          </span>
-                          <h3 className="text-base font-semibold leading-tight">
-                            {item.title}
-                          </h3>
-                          <p className="mt-1 text-xs text-foreground/60 leading-relaxed">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -477,6 +299,18 @@ export default function AboutPage() {
   const translatedCurrently = about.currently;
   const translatedRoles = about.roles;
 
+  ///bio and philosophy 卡片的滚动动画  
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    // 从容器顶部进入视口开始，到容器底部离开视口结束
+    offset: ["start start", "end start"] 
+  });
+
+  const bioX = useTransform(scrollYProgress, [0, 0.3, 1], ["0%", "0%", "-120vw"]);
+  const cardX = useTransform(scrollYProgress, [0, 0.3, 1], ["0%", "0%", "150vw"]);
+
+
   return (
     <div className="relative">
       <section className="relative flex flex-col items-center justify-center py-28 sm:py-36 px-6 overflow-hidden">
@@ -548,32 +382,54 @@ export default function AboutPage() {
         heading={about.timelineHeading}
         description={about.timelineDescription}
       />
+      {/* 给容器 200vh 的高度，提供足够的滚动空间来播放飞走动画 */}
+      <section ref={sectionRef} className="relative w-full h-[280vw]">
+
+        {/* Sticky 容器：固定在屏幕正中间，并隐藏向左飞出的溢出部分 */}
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center px-6">
+
+          <div className="relative z-10 flex flex-col items-center gap-12 text-center">
+
+            {/* Bio 区域：修复 transform 冲突，将 rotate-x-9 移入 style */}
+            <motion.div 
+              style={{ x: bioX, rotateX: 9 }} 
+              className="max-w-2xl"
+            >
+              <WordReveal text={about.bio} delay={0.3} />
+            </motion.div>
+
+            {/* Philosophy 卡片 */}
+            <motion.div
+              style={{ x: cardX }}
+              className="max-w-xl w-full rounded-2xl border border-border/50 bg-surface/40 backdrop-blur-md p-8 shadow-2xl shadow-black/10"
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.6, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              whileHover={{ y: -5, borderColor: "rgba(var(--accent), 0.2)" }}
+            >
+              <div className="flex justify-center mb-4">
+                <span className="w-8 h-px bg-accent/40" />
+              </div>
+              <p className="text-lg italic text-foreground/70 leading-relaxed font-light">
+                &ldquo;{about.philosophy}&rdquo;
+              </p>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      <section className="relative w-full py-16 sm:py-24 px-6">
+
+
+      </section>
+
+
 
       <section className="relative w-full py-16 sm:py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            <BentoCard
-              colSpan="sm:col-span-2"
-              delay={0.1}
-            >
-              <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                {cards.bio}
-              </span>
-              <div className="mt-4">
-                <WordReveal text={about.bio} delay={0.3} />
-              </div>
-              <motion.div
-                className="mt-6 h-px w-16 bg-border relative overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-y-0 left-0 bg-accent"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                />
-              </motion.div>
-            </BentoCard>
 
             <BentoCard delay={0.2}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
@@ -598,17 +454,6 @@ export default function AboutPage() {
               </motion.div>
             </BentoCard>
 
-            <BentoCard delay={0.3}>
-              <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                {cards.philosophy}
-              </span>
-              <div className="mt-4">
-                <p className="text-sm italic text-foreground/60 leading-relaxed">
-                  &ldquo;{about.philosophy}&rdquo;
-                </p>
-              </div>
-            </BentoCard>
-
             <BentoCard colSpan="sm:col-span-2" delay={0.35}>
               <span className="text-xs font-mono text-accent tracking-widest uppercase">
                 {cards.techStack}
@@ -627,40 +472,29 @@ export default function AboutPage() {
               </div>
             </BentoCard>
 
-            <BentoCard
-              delay={0.5}
-              className="flex flex-col items-center justify-center text-center !p-8"
-            >
-              <motion.div
-                initial={{ scale: 0, rotate: -10 }}
-                whileInView={{ scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  delay: 0.3,
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 15,
-                }}
-                className="text-4xl sm:text-5xl font-bold tracking-tighter leading-none"
-              >
-                <span className="text-accent">&infin;</span>
-              </motion.div>
-              <p className="mt-3 text-xs text-foreground/40 font-mono tracking-wider">
-                {cards.thingsToLearn}
-              </p>
-              <Link
-                href="/contact"
-                className="mt-4 text-xs font-mono text-accent hover:text-accent/80 transition-colors flex items-center gap-1"
-              >
-                {cards.getInTouch}
-                <motion.span
-                  animate={{ x: [0, 3, 0] }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  &rarr;
-                </motion.span>
-              </Link>
-            </BentoCard>
+            <BentoCard delay={0.5} className="flex flex-col justify-center !p-6 sm:!p-8">
+                <div className="font-mono text-xs space-y-2">
+                  <div className="flex items-center gap-2 text-foreground/40">
+                    <span className="text-accent">$</span>
+                    <span>cat contact.md</span>
+                  </div>
+                  <div className="pl-4 border-l border-border space-y-1">
+                    <TypingLine text="let's build something" delay={0.6} />
+                    <TypingLine text="amazing together." delay={0.8} />
+                  </div>
+                  <div className="flex items-center gap-2 pt-2">
+                    <span className="text-accent">$</span>
+                    <Link href="/contact" className="group flex items-center gap-2 text-accent hover:text-accent/80 transition-colors">
+                      <span>start-collaboration --no-limits</span>
+                      <motion.span 
+                        className="inline-block w-2 h-4 bg-accent/80 group-hover:bg-accent"
+                        animate={{ opacity: [1, 0] }}
+                        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+                      />
+                    </Link>
+                  </div>
+                </div>
+              </BentoCard>
           </div>
         </div>
       </section>
