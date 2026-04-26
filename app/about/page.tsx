@@ -132,7 +132,6 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-
 function OrbitingTags({
   items,
 }: {
@@ -383,7 +382,7 @@ export default function AboutPage() {
         description={about.timelineDescription}
       />
       {/* 给容器 200vh 的高度，提供足够的滚动空间来播放飞走动画 */}
-      <section ref={sectionRef} className="relative w-full h-[280vw]">
+      <section ref={sectionRef} className="relative w-full h-[90vw]">
 
         {/* Sticky 容器：固定在屏幕正中间，并隐藏向左飞出的溢出部分 */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center px-6">

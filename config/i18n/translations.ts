@@ -12,15 +12,15 @@ const en: Translations = {
     music: "MUSIC",
   },
   hero: {
-    subtitle: "Endless Curiosity, Boundless Creation",
-    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACGN Lover"],
+    subtitle: "Interest-driven Creation, Passion-driven Persistence",
+    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACG Lover"],
     explore: "Explore My Cards",
   },
   about: {
     sectionTitle: "About",
     whoAmI: "Who am I",
     tagline: "Endless Curiosity, Boundless Creation",
-    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACGN Lover"],
+    lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACG Lover"],
     bio: "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, Minecraft, and creative coding. Always chasing the next challenge — whether it's shipping a side project at 3am or hitting a new personal best on osu! Mania.",
     philosophy:
       "I believe the best way to learn is to build. Every project is a chance to experiment, break things, and discover something unexpected. Code is just another form of creative expression.",
@@ -31,7 +31,7 @@ const en: Translations = {
       "osu! Mania Player",
       "Creative Coder",
       "Night Owl",
-      "ACGN Lover",
+      "ACG Lover",
     ],
     interests: [
       { label: "Rhythm Games", emoji: "" },
@@ -202,7 +202,7 @@ const zh: Translations = {
     music: "MUSIC",
   },
   hero: {
-    subtitle: "兴趣使然创造，热爱依旧坚持",
+    subtitle: "`兴趣使然创造，热爱依旧坚持`",
     lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "ACG 爱好者"],
     explore: "探索我的卡片",
   },

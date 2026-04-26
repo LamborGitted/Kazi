@@ -111,7 +111,7 @@ export default function EnhancedTimeline({ timeline, subtitle, heading, descript
         </motion.div>
 
         {/* 底部进度条提示 */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4">
+        <div className="absolute bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-4">
           <span className="text-[10px] font-mono text-foreground/30 uppercase">Scroll to explore</span>
           <div className="w-32 h-[2px] bg-border relative overflow-hidden">
             <motion.div 
