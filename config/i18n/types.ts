@@ -37,6 +37,14 @@ export interface AboutCardsTranslations {
   activeNow: string;
 }
 
+export interface AboutCtaTranslations {
+  eyebrow: string;
+  title: string;
+  description: string;
+  primary: string;
+  secondary: string;
+}
+
 export interface AboutTranslations {
   sectionTitle: string;
   whoAmI: string;
@@ -53,6 +61,7 @@ export interface AboutTranslations {
   timelineSubtitle: string;
   timelineHeading: string;
   timelineDescription: string;
+  cta: AboutCtaTranslations;
 }
 
 export interface BlogTranslations {

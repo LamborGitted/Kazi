@@ -1,11 +1,17 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { techStack } from "@/config/about.data";
 import { useLanguage } from "@/components/LanguageProvider";
 import EnhancedTimeline from "@/components/EnhancedTimeline";
+
+interface TechItem {
+  label: string;
+  color: string;
+  category: string;
+}
 
 const charVariants = {
   hidden: { opacity: 0, y: 60, rotateX: -90 },
@@ -21,86 +27,14 @@ const charVariants = {
   }),
 };
 
-function useTilt(intensity = 8) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<React.CSSProperties>({});
+const techCategoryOrder = ["language", "framework", "tooling", "runtime"] as const;
 
-  const handleMove = useCallback(
-    (e: MouseEvent) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      setStyle({
-        transform: `perspective(800px) rotateY(${x * intensity}deg) rotateX(${-y * intensity}deg) scale3d(1.02,1.02,1.02)`,
-        transition: "transform 0.15s ease-out",
-      });
-    },
-    [intensity]
-  );
-
-  const handleLeave = useCallback(() => {
-    setStyle({
-      transform:
-        "perspective(800px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)",
-      transition: "transform 0.5s ease-out",
-    });
-  }, []);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.addEventListener("mousemove", handleMove);
-    el.addEventListener("mouseleave", handleLeave);
-    return () => {
-      el.removeEventListener("mousemove", handleMove);
-      el.removeEventListener("mouseleave", handleLeave);
-    };
-  }, [handleMove, handleLeave]);
-
-  return { ref, style };
-}
-
-function BentoCard({
-  children,
-  className = "",
-  delay = 0,
-  colSpan = "",
-  rowSpan = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-  colSpan?: string;
-  rowSpan?: string;
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-  const tilt = useTilt(6);
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{
-        delay,
-        duration: 0.7,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      className={`${colSpan} ${rowSpan}`}
-    >
-      <div
-        ref={tilt.ref}
-        style={tilt.style}
-        className={`relative rounded-2xl border border-border bg-surface/60 backdrop-blur-sm p-6 sm:p-8 h-full overflow-hidden group ${className}`}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/0 via-transparent to-accent/0 group-hover:from-accent/5 group-hover:to-accent/3 transition-all duration-700" />
-        <div className="relative z-10">{children}</div>
-      </div>
-    </motion.div>
-  );
-}
+const techCategoryLabels: Record<(typeof techCategoryOrder)[number], string> = {
+  language: "语言",
+  framework: "框架",
+  tooling: "工具",
+  runtime: "运行时",
+};
 
 function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   const ref = useRef(null);
@@ -132,66 +66,41 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-function OrbitingTags({
-  items,
-}: {
-  items: { label: string; color: string }[];
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
+// function OrbitingTags({
+//   items,
+// }: {
+//   items: { label: string; color: string }[];
+// }) {
+//   const ref = useRef(null);
+//   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
-  return (
-    <div ref={ref} className="flex flex-wrap gap-2">
-      {items.map((item, i) => (
-        <motion.span
-          key={item.label}
-          initial={{ opacity: 0, scale: 0.8, y: 10 }}
-          animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-          transition={{
-            delay: 0.2 + i * 0.06,
-            duration: 0.4,
-            type: "spring",
-            stiffness: 150,
-            damping: 15,
-          }}
-          whileHover={{ scale: 1.08, y: -2 }}
-          className="px-3 py-1.5 rounded-full border border-border bg-surface/80 text-xs font-mono whitespace-nowrap flex items-center gap-1.5 hover:border-accent/40 transition-colors cursor-default"
-        >
-          <span
-            className="w-1.5 h-1.5 rounded-full shrink-0"
-            style={{ backgroundColor: item.color }}
-          />
-          {item.label}
-        </motion.span>
-      ))}
-    </div>
-  );
-}
-
-function TypingLine({ text, delay = 0 }: { text: string; delay?: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-30px" });
-
-  return (
-    <div ref={ref} className="flex items-center gap-2">
-      <motion.span
-        initial={{ width: 0 }}
-        animate={isInView ? { width: "0.5rem" } : {}}
-        transition={{ delay, duration: 0.3 }}
-        className="h-px bg-accent shrink-0"
-        style={{ width: 0 }}
-      />
-      <motion.span
-        initial={{ opacity: 0, x: -5 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ delay: delay + 0.2, duration: 0.4 }}
-        className="text-sm text-foreground/60 font-light"
-      >
-        {text}
-      </motion.span>
-    </div>
-  );
-}
+//   return (
+//     <div ref={ref} className="flex flex-wrap gap-2">
+//       {items.map((item, i) => (
+//         <motion.span
+//           key={item.label}
+//           initial={{ opacity: 0, scale: 0.8, y: 10 }}
+//           animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+//           transition={{
+//             delay: 0.2 + i * 0.06,
+//             duration: 0.4,
+//             type: "spring",
+//             stiffness: 150,
+//             damping: 15,
+//           }}
+//           whileHover={{ scale: 1.08, y: -2 }}
+//           className="px-3 py-1.5 rounded-full border border-border bg-surface/80 text-xs font-mono whitespace-nowrap flex items-center gap-1.5 hover:border-accent/40 transition-colors cursor-default"
+//         >
+//           <span
+//             className="w-1.5 h-1.5 rounded-full shrink-0"
+//             style={{ backgroundColor: item.color }}
+//           />
+//           {item.label}
+//         </motion.span>
+//       ))}
+//     </div>
+//   );
+// }
 
 function Marquee({ roles, reverse = false }: { roles: string[]; reverse?: boolean }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -261,41 +170,161 @@ function Marquee({ roles, reverse = false }: { roles: string[]; reverse?: boolea
   );
 }
 
-function InterestGrid({ items }: { items: { label: string; emoji: string }[] }) {
+export function TechReveal({ items }: { items: TechItem[] }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-30px" });
+  const isInView = useInView(ref, { once: true, margin: "-15% 0px" });
+  const reduceMotion = useReducedMotion();
+  const groupedItems = techCategoryOrder.map((category) => ({
+    category,
+    label: techCategoryLabels[category],
+    items: items.filter((item) => item.category === category),
+  }));
 
   return (
-    <div ref={ref} className="grid grid-cols-2 gap-2">
-      {items.map((item, i) => (
-        <motion.div
-          key={item.label}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{
-            delay: 0.1 + i * 0.08,
-            type: "spring",
-            stiffness: 200,
-            damping: 18,
-          }}
-          whileHover={{ scale: 1.05, y: -2 }}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/40 border border-border/50 cursor-default"
-        >
-          <span className="text-base">{item.emoji}</span>
-          <span className="text-xs text-foreground/60">{item.label}</span>
-        </motion.div>
-      ))}
+    <div ref={ref} className="mx-auto max-w-7xl">
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        animate={isInView ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="border-y border-border py-8 sm:py-10"
+      >
+        <span className="text-xs font-mono text-accent tracking-[0.28em] uppercase">
+          Tech Stack
+        </span>
+        <h2 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+          用尽量少的形式，清楚说明我实际在用什么。
+        </h2>
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-foreground/50 sm:text-base">
+          按语言、框架、工具、运行时分组。去掉装饰性卡片，只保留文字层级、留白和入场节奏。
+        </p>
+      </motion.div>
+
+      <div className="mt-10 sm:mt-14">
+        {groupedItems.map((group, groupIndex) => (
+          <motion.section
+            key={group.category}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : undefined}
+            transition={{
+              delay: 0.08 + groupIndex * 0.1,
+              duration: 0.65,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            className="grid grid-cols-1 gap-4 border-b border-border/70 py-6 sm:gap-6 sm:py-8 lg:grid-cols-[140px_minmax(0,1fr)] lg:items-start"
+          >
+            <div className="pt-1 text-xs font-mono uppercase tracking-[0.22em] text-foreground/42">
+              {group.label}
+            </div>
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 sm:gap-x-5 sm:gap-y-3">
+              {group.items.map((item, itemIndex) => {
+                const isLast = itemIndex === group.items.length - 1;
+
+                return (
+                <motion.span
+                  key={item.label}
+                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : undefined}
+                  transition={{
+                    delay: 0.16 + groupIndex * 0.1 + itemIndex * 0.05,
+                    duration: 0.48,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                  className="inline-flex items-baseline gap-4"
+                >
+                  <span className="text-3xl font-semibold tracking-tight text-foreground/92 sm:text-4xl lg:text-5xl">
+                    {item.label}
+                  </span>
+                  {!isLast ? (
+                    <span className="text-xl font-light text-foreground/18 sm:text-2xl">
+                      /
+                    </span>
+                  ) : null}
+                </motion.span>
+              )})}
+            </div>
+          </motion.section>
+        ))}
+      </div>
     </div>
   );
 }
 
+function ContactCta({
+  eyebrow,
+  title,
+  description,
+  primary,
+  secondary,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  primary: string;
+  secondary: string;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-15% 0px" });
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <section ref={ref} className="relative overflow-hidden border-y border-border">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/6 blur-3xl sm:h-80 sm:w-80" />
+      </div>
+
+      <motion.div
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+        animate={isInView ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="relative mx-auto flex max-w-7xl flex-col gap-10 px-6 py-16 sm:py-20 lg:flex-row lg:items-end lg:justify-between lg:gap-16"
+      >
+        <div className="max-w-3xl">
+          <div className="text-xs font-mono uppercase tracking-[0.28em] text-accent">
+            {eyebrow}
+          </div>
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+            {title}
+          </h2>
+          <p className="mt-5 max-w-2xl text-sm leading-6 text-foreground/52 sm:text-base sm:leading-7">
+            {description}
+          </p>
+        </div>
+
+        <motion.div
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 18 }}
+          animate={isInView ? { opacity: 1, x: 0 } : undefined}
+          transition={{
+            delay: 0.12,
+            duration: 0.6,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className="flex shrink-0 flex-col items-start gap-3 sm:flex-row sm:items-center"
+        >
+          <Link
+            href="/contact"
+            className="group inline-flex min-h-12 items-center gap-3 rounded-full border border-foreground/10 bg-foreground px-6 py-3 text-sm font-medium text-background transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent"
+          >
+            <span>{primary}</span>
+            <span className="text-base transition-transform duration-300 group-hover:translate-x-1">
+              ↗
+            </span>
+          </Link>
+
+          <div className="inline-flex min-h-12 items-center rounded-full border border-border bg-surface/55 px-5 py-3 text-sm text-foreground/48 backdrop-blur-sm">
+            {secondary}
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+
+
 export default function AboutPage() {
   const { t } = useLanguage();
   const about = t.about;
-  const cards = about.cards;
   const translatedTimeline = about.timeline;
-  const translatedInterests = about.interests;
-  const translatedCurrently = about.currently;
   const translatedRoles = about.roles;
 
   ///bio and philosophy 卡片的滚动动画  
@@ -382,7 +411,7 @@ export default function AboutPage() {
         description={about.timelineDescription}
       />
       {/* 给容器 200vh 的高度，提供足够的滚动空间来播放飞走动画 */}
-      <section ref={sectionRef} className="relative w-full h-[90vw]">
+      <section ref={sectionRef} className="relative w-full h-[100vw]">
 
         {/* Sticky 容器：固定在屏幕正中间，并隐藏向左飞出的溢出部分 */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center px-6">
@@ -404,7 +433,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 1.6, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ delay: 0.6, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               whileHover={{ y: -5, borderColor: "rgba(var(--accent), 0.2)" }}
             >
               <div className="flex justify-center mb-4">
@@ -418,85 +447,18 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
+      {/*技术栈*/}
       <section className="relative w-full py-16 sm:py-24 px-6">
-
-
+          <TechReveal items={techStack} />
       </section>
 
-
-
-      <section className="relative w-full py-16 sm:py-24 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-
-            <BentoCard delay={0.2}>
-              <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                {cards.currently}
-              </span>
-              <div className="mt-4 space-y-3">
-                {translatedCurrently.map((item, i) => (
-                  <TypingLine key={item} text={item} delay={0.4 + i * 0.15} />
-                ))}
-              </div>
-              <motion.div
-                className="mt-5 flex items-center gap-2"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 1 }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-glow" />
-                <span className="text-[10px] font-mono text-foreground/30 tracking-wider uppercase">
-                  {cards.activeNow}
-                </span>
-              </motion.div>
-            </BentoCard>
-
-            <BentoCard colSpan="sm:col-span-2" delay={0.35}>
-              <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                {cards.techStack}
-              </span>
-              <div className="mt-2">
-                <OrbitingTags items={techStack} />
-              </div>
-            </BentoCard>
-
-            <BentoCard delay={0.4}>
-              <span className="text-xs font-mono text-accent tracking-widest uppercase">
-                {cards.interests}
-              </span>
-              <div className="mt-3">
-                <InterestGrid items={translatedInterests} />
-              </div>
-            </BentoCard>
-
-            <BentoCard delay={0.5} className="flex flex-col justify-center !p-6 sm:!p-8">
-                <div className="font-mono text-xs space-y-2">
-                  <div className="flex items-center gap-2 text-foreground/40">
-                    <span className="text-accent">$</span>
-                    <span>cat contact.md</span>
-                  </div>
-                  <div className="pl-4 border-l border-border space-y-1">
-                    <TypingLine text="let's build something" delay={0.6} />
-                    <TypingLine text="amazing together." delay={0.8} />
-                  </div>
-                  <div className="flex items-center gap-2 pt-2">
-                    <span className="text-accent">$</span>
-                    <Link href="/contact" className="group flex items-center gap-2 text-accent hover:text-accent/80 transition-colors">
-                      <span>start-collaboration --no-limits</span>
-                      <motion.span 
-                        className="inline-block w-2 h-4 bg-accent/80 group-hover:bg-accent"
-                        animate={{ opacity: [1, 0] }}
-                        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </BentoCard>
-          </div>
-        </div>
-      </section>
+      <ContactCta
+        eyebrow={about.cta.eyebrow}
+        title={about.cta.title}
+        description={about.cta.description}
+        primary={about.cta.primary}
+        secondary={about.cta.secondary}
+      />
 
       
 

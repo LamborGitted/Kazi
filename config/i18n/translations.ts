@@ -110,6 +110,14 @@ const en: Translations = {
     timelineHeading: "Timeline",
     timelineDescription:
       "Every milestone marks a step forward. From first lines of code to building real applications — this is the path that shaped who I am today.",
+    cta: {
+      eyebrow: "Next Step",
+      title: "If there is something worth building, let's talk.",
+      description:
+        "Project idea, collaboration, design feedback, or just a sharp technical question. The contact page is where the conversation starts.",
+      primary: "Open Contact",
+      secondary: "Go to contact page",
+    },
   },
   blog: {
     sectionTitle: "Blog",
@@ -176,8 +184,7 @@ const en: Translations = {
   },
   footer: {
     about: "About",
-    aboutDescription:
-      "My little corner of the internet. Building things, playing rhythm games, and exploring the web.",
+    aboutDescription: "A mysterious corner of the internet",
     online: "Online",
     navigation: "Navigation",
     home: "Home",
@@ -296,6 +303,14 @@ const zh: Translations = {
     timelineHeading: "时间线",
     timelineDescription:
       "每一个里程碑都是前进的一步。从写下第一行代码到构建真正的应用——这是塑造了今日之我的旅程。",
+    cta: {
+      eyebrow: "下一步",
+      title: "如果你手上正好有件值得认真去做的事，那就聊聊。",
+      description:
+        "无论是项目合作、页面设计、技术交流，还是一个还没成形的想法，联系页就是这段对话的入口。",
+      primary: "前往联系页",
+      secondary: "打开联系表单",
+    },
   },
   blog: {
     sectionTitle: "博客",

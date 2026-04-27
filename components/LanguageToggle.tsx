@@ -9,11 +9,6 @@ export default function LanguageToggle() {
   const { locale, setLocale } = useLanguage();
   const { resolvedTheme } = useTheme();
 
-  const chromeMuted = resolvedTheme === "dark"
-    ? "var(--muted)"
-    : "rgba(250, 250, 250, 0.68)";
-  const chromeForeground = "rgba(250, 250, 250, 0.96)";
-
   const toggle = () => {
     setLocale(locale === "en" ? "zh" : "en");
   };
@@ -21,16 +16,8 @@ export default function LanguageToggle() {
   return (
     <button
       onClick={toggle}
-      className="relative flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-200 cursor-pointer"
-      style={{
-        color: chromeMuted,
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.color = chromeForeground;
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.color = chromeMuted;
-      }}
+      className="relative flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-200 cursor-pointer text-foreground/70 hover:text-foreground"
+      suppressHydrationWarning
       aria-label={`Switch language to ${locale === "en" ? "Chinese" : "English"}`}
     >
       <motion.span
