@@ -61,6 +61,17 @@ export interface AboutTranslations {
   timelineSubtitle: string;
   timelineHeading: string;
   timelineDescription: string;
+  techStack: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    categories: {
+      language: string;
+      framework: string;
+      tooling: string;
+      runtime: string;
+    };
+  };
   cta: AboutCtaTranslations;
 }
 

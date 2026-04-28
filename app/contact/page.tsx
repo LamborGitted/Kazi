@@ -92,7 +92,6 @@ function FloatingLabel({
       >
         {label}
       </label>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-0 group-focus-within:w-full bg-accent/40 transition-all duration-500 rounded-full" />
     </motion.div>
   );
 }

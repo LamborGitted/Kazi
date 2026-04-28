@@ -16,7 +16,7 @@ export default function LanguageToggle() {
   return (
     <button
       onClick={toggle}
-      className="relative flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-200 cursor-pointer text-foreground/70 hover:text-foreground"
+      className="relative flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-200 cursor-pointer text-[#9ca3af] hover:text-[#6b7280]"
       suppressHydrationWarning
       aria-label={`Switch language to ${locale === "en" ? "Chinese" : "English"}`}
     >

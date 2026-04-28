@@ -26,13 +26,13 @@ function updateAccentColor(hue: number) {
 }
 
 function getInitialHue() {
-  if (typeof window === "undefined") return 0;
+  if (typeof window === "undefined") return 330;
   const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? parseInt(stored, 10) : 0;
+  return stored ? parseInt(stored, 10) : 330;
 }
 
 export default function HuePicker() {
-  const [hue, setHue] = useState(0);
+  const [hue, setHue] = useState(330);
   const barRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef(false);
   const initializedRef = useRef(false);

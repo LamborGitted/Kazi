@@ -110,6 +110,18 @@ const en: Translations = {
     timelineHeading: "Timeline",
     timelineDescription:
       "Every milestone marks a step forward. From first lines of code to building real applications — this is the path that shaped who I am today.",
+    techStack: {
+      eyebrow: "Tech Stack",
+      title: "Clearly explain what I actually use, in minimal form.",
+      description:
+        "Grouped by language, framework, tooling, and runtime. Removed decorative cards, keeping only text hierarchy, whitespace, and entrance rhythm.",
+      categories: {
+        language: "Language",
+        framework: "Framework",
+        tooling: "Tooling",
+        runtime: "Runtime",
+      },
+    },
     cta: {
       eyebrow: "Next Step",
       title: "If there is something worth building, let's talk.",
@@ -303,6 +315,17 @@ const zh: Translations = {
     timelineHeading: "时间线",
     timelineDescription:
       "每一个里程碑都是前进的一步。从写下第一行代码到构建真正的应用——这是塑造了今日之我的旅程。",
+    techStack: {
+      eyebrow: "技术栈",
+      title: "用尽量少的形式，清楚说明我实际在用什么。",
+      description: "按语言、框架、工具、运行时分组。去掉装饰性卡片，只保留文字层级、留白和入场节奏。",
+      categories: {
+        language: "语言",
+        framework: "框架",
+        tooling: "工具",
+        runtime: "运行时",
+      },
+    },
     cta: {
       eyebrow: "下一步",
       title: "如果你手上正好有件值得认真去做的事，那就聊聊。",

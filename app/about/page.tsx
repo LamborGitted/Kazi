@@ -29,20 +29,13 @@ const charVariants = {
 
 const techCategoryOrder = ["language", "framework", "tooling", "runtime"] as const;
 
-const techCategoryLabels: Record<(typeof techCategoryOrder)[number], string> = {
-  language: "语言",
-  framework: "框架",
-  tooling: "工具",
-  runtime: "运行时",
-};
-
 function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
   const words = text.split(" ");
 
   return (
-    <p ref={ref} className="text-base sm:text-lg leading-relaxed text-foreground/75">
+    <p ref={ref} className="text-base sm:text-xl leading-relaxed text-foreground/75">
       {words.map((word, i) => (
         <motion.span
           key={i}
@@ -152,7 +145,7 @@ function Marquee({ roles, reverse = false }: { roles: string[]; reverse?: boolea
         ref={trackRef}
         className={`flex w-max whitespace-nowrap will-change-transform ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
       >
-        {[0, 1].map((group) => (
+        {[0, 1, 2, 3, 4, 5].map((group) => (
           <div key={group} className="flex shrink-0 items-center gap-8 pr-8">
             {roles.map((role) => (
               <span
@@ -170,13 +163,25 @@ function Marquee({ roles, reverse = false }: { roles: string[]; reverse?: boolea
   );
 }
 
-export function TechReveal({ items }: { items: TechItem[] }) {
+export function TechReveal({
+  items,
+  eyebrow,
+  title,
+  description,
+  categories,
+}: {
+  items: TechItem[];
+  eyebrow: string;
+  title: string;
+  description: string;
+  categories: { language: string; framework: string; tooling: string; runtime: string };
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-15% 0px" });
   const reduceMotion = useReducedMotion();
   const groupedItems = techCategoryOrder.map((category) => ({
     category,
-    label: techCategoryLabels[category],
+    label: categories[category],
     items: items.filter((item) => item.category === category),
   }));
 
@@ -189,13 +194,13 @@ export function TechReveal({ items }: { items: TechItem[] }) {
         className="border-y border-border py-8 sm:py-10"
       >
         <span className="text-xs font-mono text-accent tracking-[0.28em] uppercase">
-          Tech Stack
+          {eyebrow}
         </span>
         <h2 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
-          用尽量少的形式，清楚说明我实际在用什么。
+          {title}
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-foreground/50 sm:text-base">
-          按语言、框架、工具、运行时分组。去掉装饰性卡片，只保留文字层级、留白和入场节奏。
+          {description}
         </p>
       </motion.div>
 
@@ -421,7 +426,7 @@ export default function AboutPage() {
             {/* Bio 区域：修复 transform 冲突，将 rotate-x-9 移入 style */}
             <motion.div 
               style={{ x: bioX, rotateX: 9 }} 
-              className="max-w-2xl"
+              className="max-w-3xl"
             >
               <WordReveal text={about.bio} delay={0.3} />
             </motion.div>
@@ -434,12 +439,9 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.6, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              whileHover={{ y: -5, borderColor: "rgba(var(--accent), 0.2)" }}
+              // whileHover={{ y: -5, borderColor: "rgba(var(--accent), 0.2)" }}
             >
-              <div className="flex justify-center mb-4">
-                <span className="w-8 h-px bg-accent/40" />
-              </div>
-              <p className="text-lg italic text-foreground/70 leading-relaxed font-light">
+              <p className="text-2xl italic text-foreground/70 leading-relaxed font-light">
                 &ldquo;{about.philosophy}&rdquo;
               </p>
             </motion.div>
@@ -449,7 +451,13 @@ export default function AboutPage() {
       </section>
       {/*技术栈*/}
       <section className="relative w-full py-16 sm:py-24 px-6">
-          <TechReveal items={techStack} />
+          <TechReveal
+            items={techStack}
+            eyebrow={about.techStack.eyebrow}
+            title={about.techStack.title}
+            description={about.techStack.description}
+            categories={about.techStack.categories}
+          />
       </section>
 
       <ContactCta
