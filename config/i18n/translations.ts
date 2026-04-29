@@ -19,7 +19,7 @@ const en: Translations = {
   about: {
     sectionTitle: "About",
     whoAmI: "Who am I",
-    tagline: "Endless Curiosity, Boundless Creation",
+    tagline: "Interest-driven Creation, Passion-driven Persistence",
     lines: ["Developer", "Creator", "osu! Mania Player", "Creative Coder", "Night Owl", "Open Source Enthusiast", "ACG Lover"],
     bio: "A developer who loves building things and exploring new technologies. Passionate about open source, rhythm games, Minecraft, and creative coding. Always chasing the next challenge — whether it's shipping a side project at 3am or hitting a new personal best on osu! Mania.",
     philosophy:
@@ -61,11 +61,6 @@ const en: Translations = {
         year: "2022-2024",
         title: "Intensifying High School Life",
         description: "Had to temporarily set aside my passions, but still held onto my own brilliant dreams",
-      },
-      {
-        year: "2025-6",
-        title: "Weaving Melodies",
-        description: "Started arranging music, creating electronic tracks and game soundtracks — turning ideas into sound",
       },
       {
         year: "2025-7",
@@ -228,11 +223,11 @@ const zh: Translations = {
   about: {
     sectionTitle: "About",
     whoAmI: "我是谁",
-    tagline: "认知无限，创造无穷",
-    lines: ["开发者", "创作者", "Osu! Mania 玩家", "创意编程者", "夜猫子", "开源爱好者", "ACG 爱好者"],
-    bio: "一个热爱构建和探索新技术的开发者。热衷于开源、音游、Minecraft 和创意编程。始终在追寻下一个挑战——无论是凌晨三点上线一个副业项目，还是在 osu! Mania 上刷新个人最佳。",
+    tagline: "`兴趣使然创造，热爱依旧坚持`",
+    lines: ["开发者", "创作者", "Osu! Mania 玩家",  "创意编程者", "夜猫子", "开源爱好者", "ACG 爱好者"],
+    bio: "一个热爱创造和探索新技术的开发者。热衷于开源，五彩缤纷的代码和创意编程。始终在追寻下一个挑战——无论是凌晨三点上线一个副业项目，还是满脑子充满奇特想法的那一个下午",
     philosophy:
-      "我相信最好的学习方式就是动手尝试。每个项目都是一次实验、打破常规、发现意外的机会。代码只是创意表达的另一种形式。",
+      "我坚信最好的学习方式就是动手尝试。每个项目都是一次实验、打破常规、发现意外的机会。另外，别忘记你所热爱的。",
     roles: [
       "开发者",
       "创作者",
@@ -250,7 +245,7 @@ const zh: Translations = {
       { label: "动漫", emoji: "" },
       { label: "深夜编码", emoji: "" },
     ],
-    currently: ["用 React & Next.js 构建个人主页", "玩 osu! Mania", "探索 agents 和 AI 工具"],
+    currently: ["用 React & Next.js 构建个人主页",  "探索 agents 和 AI 工具" , "看技术文档"],
     timeline: [
       {
         year: "2019",
@@ -266,11 +261,6 @@ const zh: Translations = {
         year: "2022-2024",
         title: "日益紧张的高中生活",
         description: "暂时得放下热爱，但仍坚持着属于自己的璀璨的梦想",
-      },
-      {
-        year: "2025-6",
-        title: "成为旋律的编织者",
-        description: "开始尝试编曲，创作电子音乐和游戏配乐，享受将想法变成声音的过程",
       },
       {
         year: "2025-7",

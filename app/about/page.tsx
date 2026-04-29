@@ -35,7 +35,7 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   const words = text.split(" ");
 
   return (
-    <p ref={ref} className="text-base sm:text-xl leading-relaxed text-foreground/75">
+    <p ref={ref} className="text-base sm:text-xl leading-relaxed text-foreground/90">
       {words.map((word, i) => (
         <motion.span
           key={i}
@@ -315,9 +315,9 @@ function ContactCta({
             </span>
           </Link>
 
-          <div className="inline-flex min-h-12 items-center rounded-full border border-border bg-surface/55 px-5 py-3 text-sm text-foreground/48 backdrop-blur-sm">
+          {/* <div className="inline-flex min-h-12 items-center rounded-full border border-border bg-surface/55 px-5 py-3 text-sm text-foreground/48 backdrop-blur-sm">
             {secondary}
-          </div>
+          </div> */}
         </motion.div>
       </motion.div>
     </section>
@@ -441,7 +441,7 @@ export default function AboutPage() {
               transition={{ delay: 0.6, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               // whileHover={{ y: -5, borderColor: "rgba(var(--accent), 0.2)" }}
             >
-              <p className="text-2xl italic text-foreground/70 leading-relaxed font-light">
+              <p className="text-2xl italic text-foreground/90 leading-relaxed font-light">
                 &ldquo;{about.philosophy}&rdquo;
               </p>
             </motion.div>

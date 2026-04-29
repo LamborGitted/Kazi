@@ -12,11 +12,11 @@ const techStack: TechItem[] = [
   { label: "Next.js", color: "#000000", category: "framework" },
   { label: "Tailwind CSS", color: "#06b6d4", category: "tooling" },
   { label: "Node.js", color: "#339933", category: "runtime" },
-  { label: "Python", color: "#3776ab", category: "language" },
   { label: "Framer Motion", color: "#ff66aa", category: "tooling" },
   { label: "Git", color: "#f05032", category: "tooling" },
   { label: "Vue.js", color: "#42b883", category: "framework" },
   { label: "Qt/C++", color: "#41cd52", category: "framework" },
+  { label: "Bun" , color: "#ffcc33", category: "runtime" },
 ];
 
 export { techStack };

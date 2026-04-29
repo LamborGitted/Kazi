@@ -20,7 +20,7 @@ const allProjects: Project[] = [
     category: "opensource",
     title: "XLA Blog",
     description:
-      "我单独制作的第一个网站，使用Vue3和Typescript。虽然不是特别完美。",
+      "我单独制作的第一个网站，使用Vue3和Typescript。",
     href: "https://github.com/LamborGitted/xla-blog",
     tags: ["Vue.js", "Vite", "TypeScript"],
     year: "2025",
@@ -31,7 +31,7 @@ const allProjects: Project[] = [
     category: "opensource",
     title: "My Arch Dotfiles",
     description:
-      "从第一次更广阔的认识Linux，到折腾出还算不错的Arch Linux配置。",
+      "从第一次更广阔的认识Linux，到折腾出不错的Arch Linux配置。",
     href: "https://github.com/LamborGitted/my-arch-dotfiles",
     tags: ["Shell", "Linux", "DevOps"],
     year: "2025",

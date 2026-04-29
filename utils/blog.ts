@@ -8,6 +8,7 @@ import remarkRehype from "remark-rehype";
 import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import rehypeStringify from "rehype-stringify";
+import rehypeHighlight from "rehype-highlight";
 import type { Locale } from "@/config/i18n/locales";
 import type { BlogPost, BlogPostMeta, Heading } from "@/components/blog/types";
 import { PostFrontmatterSchema } from "@/config/schemas";
@@ -95,6 +96,7 @@ export async function getPostBySlug(
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeSlug)
+    .use(rehypeHighlight)
     .use(rehypeStringify)
     .process(content);
 
